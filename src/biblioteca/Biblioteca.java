@@ -25,6 +25,7 @@ public class Biblioteca extends JFrame{
 		//titolonz.setIconTextGap(30);
 		startPanel.add(titolonz);
 		JButton startButton = new JButton("Start");
+		startButton.setFocusable(false);
 		//startPanel.add(new JLabel("                                                        "));
 		startPanel.add(startButton);
 		add(startPanel);

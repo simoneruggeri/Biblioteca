@@ -16,10 +16,15 @@ public class BibliotecaMenu extends JPanel{
 		setLayout(new GridLayout(0,1));
 		
 		JButton ricercaButton = new JButton("Ricerca Titolo");
+		ricercaButton.setFocusable(false);
 		JButton aggiungiButton = new JButton("Aggiungi Titolo");
+		aggiungiButton.setFocusable(false);
 		JButton rimuoviButton = new JButton("Rimuovi Titolo");
+		rimuoviButton.setFocusable(false);
 		JButton prenotaButton = new JButton("Prenota Libro");
+		prenotaButton.setFocusable(false);
 		JButton restituisciButton = new JButton("Restituisci Libro");
+		restituisciButton.setFocusable(false);
 		JButton esciButton = new JButton("Esci");
 		
 		add(ricercaButton);
