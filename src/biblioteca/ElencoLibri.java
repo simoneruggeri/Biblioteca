@@ -25,29 +25,53 @@ public class ElencoLibri {
     	elenco.remove(libro);
     }
     
-    public ArrayList<Libro> perTitolo(String titolo) {
-    	ArrayList<Libro> listaPerTitolo = new ArrayList<Libro>();
+    public void ricerca(String cerca) {
+    	if(cerca != null) {
+    		boolean titolo = false;
+        	boolean autore = false;
+        	boolean genere = false;
+        	for (Libro libro : elenco) {
+        		if (libro.getTitolo().toLowerCase().contains(cerca))
+        			titolo = true;
+        		else titolo = false;
+        		if (libro.getAutore().toLowerCase().contains(cerca))
+        			autore = true;
+        		else autore = false;
+        		if (libro.getGenere().toLowerCase().contains(cerca))
+        			genere = true;
+        		else genere = false;
+        		libro.setRicercato(titolo||genere||autore);
+        	}
+    	}else {
+    		for (Libro libro : elenco)
+    			libro.setRicercato(true);
+    	}
+  	
+    		
+    }
+    
+    
+    /*public void perTitolo(String titolo) {
     	for (Libro libro : elenco)
     		if (libro.getTitolo().contains(titolo))
-    			listaPerTitolo.add(libro);
-    	return listaPerTitolo;
+    			libro.setRicercato(true);
+    		else libro.setRicercato(false);
     }
     
-    public ArrayList<Libro> perAutore(String autore) {
-    	ArrayList<Libro> listaPerAutore = new ArrayList<Libro>();
+    public void perAutore(String autore) {
     	for (Libro libro : elenco)
     		if (libro.getAutore().contains(autore))
-    			listaPerAutore.add(libro);
-    	return listaPerAutore;
+    			libro.setRicercato(true);
+    		else libro.setRicercato(false);
     }
     
-    public ArrayList<Libro> perGenere(String genere) {
-    	ArrayList<Libro> listaPerGenere = new ArrayList<Libro>();
+    public void perGenere(String genere) {
     	for (Libro libro : elenco)
     		if (libro.getGenere().contains(genere))
-    			listaPerGenere.add(libro);
-    	return listaPerGenere;
+    			libro.setRicercato(true);
+    		else libro.setRicercato(false);
     }
+    */
 
 	public ArrayList<Libro> getElenco() {
 		return elenco;

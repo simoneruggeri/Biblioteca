@@ -11,12 +11,14 @@ import javax.swing.JScrollPane;
 
 public class BibliotecaMenu extends JPanel{
 
+	private PannelloLibri pannello;
 	public BibliotecaMenu(PannelloLibri pannello) {
 	
+		this.pannello = pannello;
 		setLayout(new GridLayout(0,1));
 		
-		JButton ricercaButton = new JButton("Ricerca Titolo");
-		ricercaButton.setFocusable(false);
+		JButton visualizzaButton = new JButton("Visualizza Catalogo");
+		visualizzaButton.setFocusable(false);
 		JButton aggiungiButton = new JButton("Aggiungi Titolo");
 		aggiungiButton.setFocusable(false);
 		JButton rimuoviButton = new JButton("Rimuovi Titolo");
@@ -27,7 +29,7 @@ public class BibliotecaMenu extends JPanel{
 		restituisciButton.setFocusable(false);
 		JButton esciButton = new JButton("Esci");
 		
-		add(ricercaButton);
+		add(visualizzaButton);
 		add(aggiungiButton);
 		add(rimuoviButton);
 		add(prenotaButton);
@@ -49,6 +51,14 @@ public class BibliotecaMenu extends JPanel{
 				pannello.restituisci();
 			}
 	    });
+		
+		visualizzaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				pannello.mostra();
+			}
+	    });
+		
+		
 	
 	}
 }

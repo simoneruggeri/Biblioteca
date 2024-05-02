@@ -5,16 +5,21 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 public class Biblioteca extends JFrame{
 	
 	JPanel startPanel = new JPanel();
+	JTextField casella;
+	ElencoLibri bib = new ElencoLibri(); 
 	
 	public Biblioteca(String s) {
 		super(s);
 		setSize(600,400);
 		
+		casella = new JTextField();
 		startPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 10));
 		startPanel.add(new JLabel(new ImageIcon(getClass().getResource("libri.png"))));
 		JLabel titolonz = new JLabel();
@@ -44,7 +49,10 @@ public class Biblioteca extends JFrame{
 	public void menu() {
 		remove(startPanel);
 		
-		ElencoLibri bib = new ElencoLibri(); 
+		JPanel visual = new JPanel(new BorderLayout());
+		visual.add(casella, BorderLayout.NORTH);
+		
+		
 		Libro libro1 = new Libro("La Divina Commedia", "Dante Alighieri", "Commedia", 1215);
 		Libro libro2 = new Libro("Viva La Pancia", "Marco Reus", "Giallo", 2027);
 		Libro libro3 = new Libro("Kinder Pingui", "Magui Corceiro", "Drammatico", 1456);
@@ -60,12 +68,35 @@ public class Biblioteca extends JFrame{
 		bib.aggiungiTitolo(libro6);
 		libro6.prenota();
 		
-		PannelloLibri pan = new PannelloLibri(bib.getElenco());
+		
+		PannelloLibri pan = new PannelloLibri(bib);
+		//pan.ricerca(casella.getText());
+		casella.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            	pan.ricerca(casella.getText());
+            	System.out.println();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	pan.ricerca(casella.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            	pan.ricerca(casella.getText());
+            }
+		});
+		
 		JScrollPane scrollPane = new JScrollPane(pan);
-		add(scrollPane, BorderLayout.CENTER);
+		visual.add(scrollPane, BorderLayout.CENTER);
+		
 		
 		BibliotecaMenu bpanel = new BibliotecaMenu(pan);
 		add(bpanel, BorderLayout.WEST);
+		
+		
+		add(visual, BorderLayout.CENTER);
 		
 		revalidate();
 	}

@@ -13,6 +13,7 @@ public class Libro {
 	private String genere;
 	private int anno;
 	private boolean stato;
+	private boolean ricercato;
 	
 	public Libro(String titolo, String autore, String genere, int anno) {
 		this.titolo = titolo;
@@ -20,6 +21,7 @@ public class Libro {
 		this.genere = genere;
 		this.anno = anno;
 		this.stato = true;
+		this.ricercato = true;
 	}
 
 	public String getTitolo() {
@@ -58,6 +60,14 @@ public class Libro {
 		return stato;
 	}
 	
+	public boolean isRicercato() {
+		return ricercato;
+	}
+
+	public void setRicercato(boolean ricercato) {
+		this.ricercato = ricercato;
+	}
+
 	public void prenota() {
 		stato = false;
 	}
