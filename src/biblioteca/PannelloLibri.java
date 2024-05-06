@@ -227,7 +227,6 @@ public class PannelloLibri extends JPanel {
         		add(panLib);
         		JButton rimuovi = new JButton("Rimuovi");
         		rimuovi.setFocusable(false);
-        		//prenota.setMaximumSize(new Dimension(10,10));
         		//prenota.setPreferredSize(new Dimension(10,10));
         		rimuovi.addActionListener(e -> {
         	        elenco.rimuoviTitolo(libro);
