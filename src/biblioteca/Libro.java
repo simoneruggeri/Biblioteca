@@ -103,8 +103,10 @@ public class Libro {
     
     public JPanel toPanel() {
     	JPanel panel = new JPanel(new GridLayout(0, 1));
+    	JLabel etichettaTitolo = new JLabel(toStringTitolo());
     	panel.add(new JLabel("--------------------------"));
-    	panel.add(new JLabel(toStringTitolo()));
+    	etichettaTitolo.setToolTipText(titolo);
+    	panel.add(etichettaTitolo);
     	panel.add(new JLabel(toStringAutore()));
     	panel.add(new JLabel(toStringGenere()));
     	panel.add(new JLabel(toStringAnno()));

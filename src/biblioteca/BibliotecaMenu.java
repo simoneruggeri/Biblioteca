@@ -58,6 +58,12 @@ public class BibliotecaMenu extends JPanel{
 			}
 	    });
 		
+		aggiungiButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				pannello.aggiungi();
+			}
+	    });
+		
 		
 	
 	}
