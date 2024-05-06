@@ -64,6 +64,12 @@ public class BibliotecaMenu extends JPanel{
 			}
 	    });
 		
+		rimuoviButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				pannello.rimuovi();
+			}
+	    });
+		
 		
 	
 	}

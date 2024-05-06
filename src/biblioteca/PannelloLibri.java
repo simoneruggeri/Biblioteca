@@ -101,6 +101,18 @@ public class PannelloLibri extends JPanel {
     	mode = 'm';
     	setLayout(new GridLayout(0, 2));
     	elenco.ricerca(ricerca);
+    	add(new JLabel("Ordina per:"));
+    	JButton perTitolo = new JButton("Titolo");
+    	JButton perAutore = new JButton("Autore");
+    	JButton perGenere = new JButton("Genere");
+    	JButton perAnno = new JButton("Anno");
+    	JPanel buttonPanel = new JPanel();
+    	buttonPanel.setPreferredSize(new Dimension(206,50));
+    	buttonPanel.add(perTitolo);
+    	buttonPanel.add(perAutore);
+    	buttonPanel.add(perGenere);
+    	buttonPanel.add(perAnno);
+    	add(buttonPanel);
     	int disp = 0;
         for (Libro libro : elenco.getElenco()) {
         	if(libro.isRicercato()) {
@@ -138,6 +150,9 @@ public class PannelloLibri extends JPanel {
 	    		break;
 	    	case 'p':
 	    		prenota();
+	    		break;
+	    	case 'c':
+	    		rimuovi();
 	    		break;
 	    	case 'a':
 	    		break;
@@ -194,5 +209,42 @@ public class PannelloLibri extends JPanel {
     	for (int i=0; i<5; i++)
     		add(new JPanel());
     	
+    }
+    
+    public void rimuovi() {
+    	removeAll();
+    	revalidate();
+    	repaint();
+    	mode = 'c';
+    	setLayout(new GridLayout(0, 2));
+    	int disp = 0;
+    	elenco.ricerca(ricerca);
+        for (Libro libro : elenco.getElenco()) {
+        	if (libro.getStato() && libro.isRicercato()) {
+        		disp++;
+        		JPanel panLib = libro.toPanel();
+        		panLib.setPreferredSize(new Dimension(10,80));
+        		add(panLib);
+        		JButton rimuovi = new JButton("Rimuovi");
+        		rimuovi.setFocusable(false);
+        		//prenota.setMaximumSize(new Dimension(10,10));
+        		//prenota.setPreferredSize(new Dimension(10,10));
+        		rimuovi.addActionListener(e -> {
+        	        elenco.rimuoviTitolo(libro);
+        	        rimuovi();
+        	    });
+        		JPanel pan = new JPanel();
+            	pan.add(rimuovi);
+            	//pan.setPreferredSize(new Dimension(10,10));
+            	add(pan);
+        	}
+        }
+        if (disp<5)
+        	for (int i=0; i<6-disp; i++) {
+        		JPanel vuoto = new JPanel();
+        		vuoto.setPreferredSize(new Dimension(10,80));
+        		add(vuoto);
+        		add(vuoto);
+        	} 
     }
 }
