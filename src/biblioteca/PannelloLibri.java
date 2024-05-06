@@ -191,11 +191,8 @@ public class PannelloLibri extends JPanel {
 				mostra();
 			}
 	    });
-    	add(new JPanel());
-    	add(new JPanel());
-    	add(new JPanel());
-    	add(new JPanel());
-    	add(new JPanel());
+    	for (int i=0; i<5; i++)
+    		add(new JPanel());
     	
     }
 }
