@@ -13,6 +13,8 @@ public class PannelloLibri extends JPanel {
 	private ElencoLibri elenco;
 	private String ricerca;
 	private char mode;
+	int sel=0;
+	String[] tipi = {"titolo","autore","genere","anno"};
 	
     public PannelloLibri(ElencoLibri elenco) {
     	this.elenco = elenco;
@@ -101,24 +103,50 @@ public class PannelloLibri extends JPanel {
     	mode = 'm';
     	setLayout(new GridLayout(0, 2));
     	elenco.ricerca(ricerca);
-    	JPanel labelPanel = new JPanel();
-//    	labelPanel.setPreferredSize(new Dimension(206,20));
-    	labelPanel.add(new JLabel("Ordina per:"));
-    	add(labelPanel);
-    	String[] tipi = {"titolo","autore","genere","anno"};
-    	JComboBox<String> combo1 = new JComboBox<>(tipi);
-//    	JButton perTitolo = new JButton("Titolo");
-//    	JButton perAutore = new JButton("Autore");
-//    	JButton perGenere = new JButton("Genere");
-//    	JButton perAnno = new JButton("Anno");
-    	JPanel buttonPanel = new JPanel();
-//    	buttonPanel.setPreferredSize(new Dimension(206,50));
-//    	buttonPanel.add(perTitolo);
-//    	buttonPanel.add(perAutore);
-//    	buttonPanel.add(perGenere);
-//    	buttonPanel.add(perAnno);
+    	
+    	
+    	add(new JLabel("Ordina per:"));
+    	
+    	String[] sorted = new String[4];
+    	for(int i = 0; i<4; i++) {
+    		sorted[i] = tipi[(sel+i)%4];
+    	}
+    	
+    	
+    	JComboBox<String> combo1 = new JComboBox<>(sorted);
+    	combo1.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			switch ((String) combo1.getSelectedItem()) {
+    			case "titolo":
+    				elenco.ordinaPerTitolo();
+    				sel=0;
+    				mostra();
+    				break;
+    			case "autore":
+    				elenco.ordinaPerAutore();
+    				sel=1;
+    				mostra();
+    				break;
+    			case "genere":
+    				elenco.ordinaPerGenere();
+    				sel=2;
+    				mostra();
+    				break;
+    			case "anno":
+    				elenco.ordinaPerAnno();
+    				sel=3;
+    				mostra();
+    				break;
+    			}
+    		}
+    	});
+
+    	JPanel buttonPanel = new JPanel(new GridLayout(0,1));
+    	buttonPanel.add(new JLabel());
     	buttonPanel.add(combo1);
+    	buttonPanel.add(new JLabel());
     	add(buttonPanel);
+    	//add(combo1);
     	int disp = 0;
         for (Libro libro : elenco.getElenco()) {
         	if(libro.isRicercato()) {

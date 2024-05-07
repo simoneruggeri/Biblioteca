@@ -70,8 +70,24 @@ public class ElencoLibri {
     		if (libro.getGenere().contains(genere))
     			libro.setRicercato(true);
     		else libro.setRicercato(false);
+    }*/
+    
+    public void ordinaPerTitolo() {
+    	Collections.sort(this.elenco, Comparator.comparing(Libro::getTitolo));
     }
-    */
+    
+    public void ordinaPerAutore() {
+    	Collections.sort(this.elenco, Comparator.comparing(Libro::getAutore));
+    }
+    
+    public void ordinaPerGenere() {
+    	Collections.sort(this.elenco, Comparator.comparing(Libro::getGenere));
+    }
+    
+    public void ordinaPerAnno() {
+    	Collections.sort(this.elenco, Comparator.comparingInt(Libro::getAnno));
+    }
+    
 
 	public ArrayList<Libro> getElenco() {
 		return elenco;

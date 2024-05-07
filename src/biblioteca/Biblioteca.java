@@ -25,8 +25,8 @@ public class Biblioteca extends JFrame{
 	
 		URL imageURL = getClass().getResource("png.png");
 		ImageIcon icon = new ImageIcon(imageURL);
-		int newWidth = 200; // Nuova larghezza
-		int newHeight = 150; // Nuova altezza
+		int newWidth = 200; 
+		int newHeight = 150; 
 		Image image = icon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_DEFAULT);
 		ImageIcon scaledIcon = new ImageIcon(image);
 		startPanel.add(new JLabel(scaledIcon));
@@ -34,7 +34,7 @@ public class Biblioteca extends JFrame{
 		JLabel titolonz = new JLabel();
 		
 		titolonz.setText("BIBLIOTECA");
-		titolonz.setForeground(Color.DARK_GRAY);
+		//titolonz.setForeground(Color.DARK_GRAY);
 		titolonz.setFont(new Font("Times new roman", Font.BOLD, 60));		
 		startPanel.add(titolonz);
 		JButton startButton = new JButton("Start");
