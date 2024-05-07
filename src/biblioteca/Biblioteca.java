@@ -3,6 +3,7 @@ package biblioteca;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.ArrayList;
 import java.awt.*;
 
 import javax.swing.*;
@@ -76,7 +77,7 @@ public class Biblioteca extends JFrame{
 		libro6.prenota();
 		
 		
-		PannelloLibri pan = new PannelloLibri(bib);
+		PannelloLibri pan = new PannelloLibri(bib, new ArrayList<Utente>());
 		//pan.ricerca(casella.getText());
 		casella.getDocument().addDocumentListener(new DocumentListener() {
             @Override

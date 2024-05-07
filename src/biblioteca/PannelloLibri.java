@@ -11,13 +11,15 @@ import java.awt.*;
 public class PannelloLibri extends JPanel {
     
 	private ElencoLibri elenco;
+	private ArrayList<Utente> utenti;
 	private String ricerca;
 	private char mode;
 	int sel=0;
 	String[] tipi = {"titolo","autore","genere","anno"};
 	
-    public PannelloLibri(ElencoLibri elenco) {
+    public PannelloLibri(ElencoLibri elenco, ArrayList<Utente> utenti) {
     	this.elenco = elenco;
+    	this.utenti = utenti;
     	this.mostra();    	
         
     }
@@ -38,11 +40,26 @@ public class PannelloLibri extends JPanel {
         		add(panLib);
         		JButton prenota = new JButton("Prenota");
         		prenota.setFocusable(false);
-        		//prenota.setMaximumSize(new Dimension(10,10));
-        		//prenota.setPreferredSize(new Dimension(10,10));
+
+        		
         		prenota.addActionListener(e -> {
-        	        libro.prenota();
-        	        prenota();
+        			removeAll();
+        	    	revalidate();
+        	    	repaint();
+        	    	setLayout(new GridLayout(0, 2));
+        	    	add(new JLabel("username:"));
+        	    	JComboBox<String> combo = new JComboBox<>(new String[2]);
+        	    	JPanel pan = new JPanel();
+        	    	combo.setPreferredSize(new Dimension(206, 25));
+        	    	combo.addActionListener(new ActionListener() {
+        	    		public void actionPerformed(ActionEvent e) {
+        	    			libro.prenota();
+                	        prenota();
+        	    		}
+        	    	});
+        	    	pan.add(combo);
+        	    	add(pan);
+        	        
         	    });
         		JPanel pan = new JPanel();
             	pan.add(prenota);
