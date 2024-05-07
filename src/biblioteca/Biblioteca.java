@@ -2,6 +2,7 @@ package biblioteca;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.awt.*;
 
 import javax.swing.*;
@@ -21,17 +22,24 @@ public class Biblioteca extends JFrame{
 		
 		casella = new JTextField();
 		startPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 10));
-		startPanel.add(new JLabel(new ImageIcon(getClass().getResource("libri.png"))));
+	
+		URL imageURL = getClass().getResource("png.png");
+		ImageIcon icon = new ImageIcon(imageURL);
+		int newWidth = 200; // Nuova larghezza
+		int newHeight = 150; // Nuova altezza
+		Image image = icon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_DEFAULT);
+		ImageIcon scaledIcon = new ImageIcon(image);
+		startPanel.add(new JLabel(scaledIcon));
+		
 		JLabel titolonz = new JLabel();
-		//titolonz.setIcon(new ImageIcon(getClass().getResource("libri.png")));
+		
 		titolonz.setText("BIBLIOTECA");
-		titolonz.setFont(new Font("Arial", Font.PLAIN, 60));
-		//titolonz.setVerticalTextPosition(JLabel.BOTTOM);
-		//titolonz.setIconTextGap(30);
+		titolonz.setForeground(Color.DARK_GRAY);
+		titolonz.setFont(new Font("Times new roman", Font.BOLD, 60));		
 		startPanel.add(titolonz);
 		JButton startButton = new JButton("Start");
+		startButton.setPreferredSize(new Dimension(80,40));
 		startButton.setFocusable(false);
-		//startPanel.add(new JLabel("                                                        "));
 		startPanel.add(startButton);
 		add(startPanel);
 		//pack();
