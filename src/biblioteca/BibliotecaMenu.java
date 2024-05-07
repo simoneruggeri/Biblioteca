@@ -28,6 +28,7 @@ public class BibliotecaMenu extends JPanel{
 		JButton restituisciButton = new JButton("Restituisci Libro");
 		restituisciButton.setFocusable(false);
 		JButton esciButton = new JButton("Esci");
+		esciButton.setFocusable(false);
 		
 		add(visualizzaButton);
 		add(aggiungiButton);

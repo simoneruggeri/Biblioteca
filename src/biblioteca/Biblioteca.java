@@ -42,7 +42,6 @@ public class Biblioteca extends JFrame{
 		startButton.setFocusable(false);
 		startPanel.add(startButton);
 		add(startPanel);
-		//pack();
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				//repaint();
