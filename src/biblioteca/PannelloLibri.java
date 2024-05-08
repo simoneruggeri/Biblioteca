@@ -47,14 +47,35 @@ public class PannelloLibri extends JPanel {
         	    	revalidate();
         	    	repaint();
         	    	setLayout(new GridLayout(0, 2));
-        	    	add(new JLabel("username:"));
-        	    	JComboBox<String> combo = new JComboBox<>(new String[2]);
+        	    	JPanel labelPanel = new JPanel();
+        	    	JLabel eti = new JLabel("username:");
+        	    	eti.setPreferredSize(new Dimension(206, 25));
+        	    	labelPanel.add(eti);
+        	    	add(labelPanel);
+        	    	JComboBox<String> combo = new JComboBox<>();
+        	    	combo.addItem("------------------------------------------");
+        	    	for (Utente utente : utenti) {
+        	            combo.addItem(utente.getUsername());
+        	        }
         	    	JPanel pan = new JPanel();
         	    	combo.setPreferredSize(new Dimension(206, 25));
         	    	combo.addActionListener(new ActionListener() {
         	    		public void actionPerformed(ActionEvent e) {
-        	    			libro.prenota();
-                	        prenota();
+        	    			String usernameSelezionato = (String) combo.getSelectedItem();
+        	    			
+        	    			Utente utenteSelezionato = null;
+        	    			for (Utente utente : utenti) {
+        	                    if (utente.getUsername().equals(usernameSelezionato)) {
+        	                        utenteSelezionato = utente;
+        	                        break;
+        	                    }
+        	                }
+        	    			if (utenteSelezionato != null) {
+     	                    	utenteSelezionato.prenotaUtente(libro);
+         	                    libro.prenota();
+         	                    prenota();
+     	                    }
+                	        
         	    		}
         	    	});
         	    	pan.add(combo);
@@ -63,7 +84,6 @@ public class PannelloLibri extends JPanel {
         	    });
         		JPanel pan = new JPanel();
             	pan.add(prenota);
-            	//pan.setPreferredSize(new Dimension(10,10));
             	add(pan);
         	}
         }

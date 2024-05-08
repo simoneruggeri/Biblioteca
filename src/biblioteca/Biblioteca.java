@@ -76,8 +76,12 @@ public class Biblioteca extends JFrame{
 		bib.aggiungiTitolo(libro6);
 		libro6.prenota();
 		
+		ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
+		listaUtenti.add(new Utente("sslazio"));
+		listaUtenti.add(new Utente("pinodaniele"));
+		listaUtenti.add(new Utente("bingo"));
 		
-		PannelloLibri pan = new PannelloLibri(bib, new ArrayList<Utente>());
+		PannelloLibri pan = new PannelloLibri(bib, listaUtenti);
 		//pan.ricerca(casella.getText());
 		casella.getDocument().addDocumentListener(new DocumentListener() {
             @Override
