@@ -19,6 +19,8 @@ public class BibliotecaMenu extends JPanel{
 		
 		JButton visualizzaButton = new JButton("Visualizza Catalogo");
 		visualizzaButton.setFocusable(false);
+		JButton utentiButton = new JButton("Visualizza Utenti");
+		utentiButton.setFocusable(false);
 		JButton aggiungiButton = new JButton("Aggiungi Titolo");
 		aggiungiButton.setFocusable(false);
 		JButton rimuoviButton = new JButton("Rimuovi Titolo");
@@ -31,6 +33,7 @@ public class BibliotecaMenu extends JPanel{
 		esciButton.setFocusable(false);
 		
 		add(visualizzaButton);
+		add(utentiButton);
 		add(aggiungiButton);
 		add(rimuoviButton);
 		add(prenotaButton);
@@ -68,6 +71,12 @@ public class BibliotecaMenu extends JPanel{
 		rimuoviButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				pannello.rimuovi();
+			}
+	    });
+		
+		utentiButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				pannello.utenti();
 			}
 	    });
 		

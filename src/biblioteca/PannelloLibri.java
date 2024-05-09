@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 
 public class PannelloLibri extends JPanel {
@@ -316,5 +318,30 @@ public class PannelloLibri extends JPanel {
         		add(vuoto);
         		add(vuoto);
         	} 
+    }
+    
+    public void utenti() {
+    	removeAll();
+    	revalidate();
+    	repaint();
+    	setLayout(new FlowLayout());
+    	Object[][] data = {
+                {"John", 25},
+                {"Alice", 30},
+                {"Bob", 35}
+        };
+    	Object dati [][] = new Object[utenti.size()][2];
+    	int i = 0;
+    	for (Utente utente : utenti) {
+    		dati[i][0] = utente.getUsername();
+    	    dati[i][1] = utente.getLibriUtente().toString();
+    	    i++;
+    	}
+    	String[] columnNames = {"username", "Libri"};
+    	JTable tab = new JTable(new DefaultTableModel(dati, columnNames));
+    	JScrollPane sp = new JScrollPane(tab);
+        add(sp);
+    	//add(tab);
+    	
     }
 }
