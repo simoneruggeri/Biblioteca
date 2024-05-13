@@ -29,4 +29,8 @@ public class Utente {
 	public void restituisciUtente(Libro libro) {
 		libriUtente.rimuoviTitolo(libro);
 	}
+	
+	public boolean presente(Libro libro) {
+		return libriUtente.presente(libro);
+	}
 }

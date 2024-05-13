@@ -2,6 +2,7 @@ package biblioteca;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Objects;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -116,6 +117,24 @@ public class Libro {
 	@Override
 	public String toString() {
 		return "Titolo: " + titolo + "Autore:" + autore + "\nGenere: " + genere + "\nAnno: " + anno;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(anno, autore, genere, titolo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Libro other = (Libro) obj;
+		return anno == other.anno && Objects.equals(autore, other.autore) && Objects.equals(genere, other.genere)
+				&& Objects.equals(titolo, other.titolo);
 	}
 
 	

@@ -101,6 +101,13 @@ public class ElencoLibri {
 		return s;
 	}
 	
+	public boolean presente(Libro check) {
+		for (Libro libro : elenco)
+			if (libro.equals(check))
+				return true;
+		return false;
+	}
+	
 	
     
     

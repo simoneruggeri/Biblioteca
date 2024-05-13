@@ -12,18 +12,15 @@ import java.awt.*;
 
 public class PannelloLibri extends JPanel {
     
-	private ElencoLibri elenco;
-	private ArrayList<Utente> utenti;
+	private Biblioteca biblioteca;
 	private String ricerca;
 	private char mode;
 	int sel=0;
 	String[] tipi = {"titolo","autore","genere","anno"};
 	
-    public PannelloLibri(ElencoLibri elenco, ArrayList<Utente> utenti) {
-    	this.elenco = elenco;
-    	this.utenti = utenti;
-    	this.mostra();    	
-        
+    public PannelloLibri(Biblioteca biblioteca) {
+    	this.biblioteca = biblioteca;
+    	this.mostra();
     }
     
     public void prenota() {
@@ -33,8 +30,8 @@ public class PannelloLibri extends JPanel {
     	mode = 'p';
     	setLayout(new GridLayout(0, 2));
     	int disp = 0;
-    	elenco.ricerca(ricerca);
-        for (Libro libro : elenco.getElenco()) {
+    	biblioteca.ricerca(ricerca);
+        for (Libro libro : biblioteca.getListaLibri().getElenco()) {
         	if (libro.getStato() && libro.isRicercato()) {
         		disp++;
         		JPanel panLib = libro.toPanel();
@@ -56,7 +53,7 @@ public class PannelloLibri extends JPanel {
         	    	add(labelPanel);
         	    	JComboBox<String> combo = new JComboBox<>();
         	    	combo.addItem("------------------------------------------");
-        	    	for (Utente utente : utenti) {
+        	    	for (Utente utente : biblioteca.getListaUtenti()) {
         	            combo.addItem(utente.getUsername());
         	        }
         	    	JPanel pan = new JPanel();
@@ -66,7 +63,7 @@ public class PannelloLibri extends JPanel {
         	    			String usernameSelezionato = (String) combo.getSelectedItem();
         	    			
         	    			Utente utenteSelezionato = null;
-        	    			for (Utente utente : utenti) {
+        	    			for (Utente utente : biblioteca.getListaUtenti()) {
         	                    if (utente.getUsername().equals(usernameSelezionato)) {
         	                        utenteSelezionato = utente;
         	                        break;
@@ -105,8 +102,8 @@ public class PannelloLibri extends JPanel {
     	mode = 'r';
     	setLayout(new GridLayout(0, 2));
     	int disp = 0;
-    	elenco.ricerca(ricerca);
-        for (Libro libro : elenco.getElenco()) {
+    	biblioteca.ricerca(ricerca);
+        for (Libro libro : biblioteca.getListaLibri().getElenco()) {
         	if (!libro.getStato() && libro.isRicercato()) {
         		disp++;
         		JPanel panLib = libro.toPanel();
@@ -114,6 +111,11 @@ public class PannelloLibri extends JPanel {
         		add(panLib);
         		JButton restituisci = new JButton("Restituisci");
         		restituisci.setFocusable(false);
+        		String rest = "";
+        		for (Utente utente : biblioteca.getListaUtenti())
+        			if (utente.presente(libro))
+        				rest = utente.getUsername();
+        		restituisci.setToolTipText("In prestito a: " + rest);
         		//prenota.setMaximumSize(new Dimension(10,10));
         		//prenota.setPreferredSize(new Dimension(10,10));
         		restituisci.addActionListener(e -> {
@@ -141,7 +143,7 @@ public class PannelloLibri extends JPanel {
     	repaint();
     	mode = 'm';
     	setLayout(new GridLayout(0, 2));
-    	elenco.ricerca(ricerca);
+    	biblioteca.ricerca(ricerca);
     	
     	
     	add(new JLabel("Ordina per:"));
@@ -157,22 +159,22 @@ public class PannelloLibri extends JPanel {
     		public void actionPerformed(ActionEvent e) {
     			switch ((String) combo1.getSelectedItem()) {
     			case "titolo":
-    				elenco.ordinaPerTitolo();
+    				biblioteca.getListaLibri().ordinaPerTitolo();
     				sel=0;
     				mostra();
     				break;
     			case "autore":
-    				elenco.ordinaPerAutore();
+    				biblioteca.getListaLibri().ordinaPerAutore();
     				sel=1;
     				mostra();
     				break;
     			case "genere":
-    				elenco.ordinaPerGenere();
+    				biblioteca.getListaLibri().ordinaPerGenere();
     				sel=2;
     				mostra();
     				break;
     			case "anno":
-    				elenco.ordinaPerAnno();
+    				biblioteca.getListaLibri().ordinaPerAnno();
     				sel=3;
     				mostra();
     				break;
@@ -187,7 +189,7 @@ public class PannelloLibri extends JPanel {
     	add(buttonPanel);
     	//add(combo1);
     	int disp = 0;
-        for (Libro libro : elenco.getElenco()) {
+        for (Libro libro : biblioteca.getListaLibri().getElenco()) {
         	if(libro.isRicercato()) {
         		add(libro.toPanel());
         		disp++;
@@ -198,7 +200,11 @@ public class PannelloLibri extends JPanel {
             	} 
             	else {
             		JLabel discorosso = new JLabel(new ImageIcon(getClass().getResource("red.png")));
-            		discorosso.setToolTipText("Non Disponibile");
+            		String redTool = "";
+            		for (Utente utente : biblioteca.getListaUtenti())
+            			if (utente.presente(libro))
+            				redTool = utente.getUsername();
+            		discorosso.setToolTipText("In prestito a: " + redTool);
             		add(discorosso);
             	}
         	}
@@ -227,7 +233,7 @@ public class PannelloLibri extends JPanel {
 	    	case 'c':
 	    		rimuovi();
 	    		break;
-	    	case 'a':
+	    	default:
 	    		break;
     	}
     }
@@ -275,7 +281,7 @@ public class PannelloLibri extends JPanel {
     	add(aggpan);
     	agg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				elenco.aggiungiTitolo(new Libro(titolo.getText(), autore.getText(), genere.getText(), Integer.parseInt((String) combo.getSelectedItem())));
+				biblioteca.aggiungiTitolo(new Libro(titolo.getText(), autore.getText(), genere.getText(), Integer.parseInt((String) combo.getSelectedItem())));
 				mostra();
 			}
 	    });
@@ -291,8 +297,8 @@ public class PannelloLibri extends JPanel {
     	mode = 'c';
     	setLayout(new GridLayout(0, 2));
     	int disp = 0;
-    	elenco.ricerca(ricerca);
-        for (Libro libro : elenco.getElenco()) {
+    	biblioteca.ricerca(ricerca);
+        for (Libro libro : biblioteca.getListaLibri().getElenco()) {
         	if (libro.getStato() && libro.isRicercato()) {
         		disp++;
         		JPanel panLib = libro.toPanel();
@@ -302,7 +308,7 @@ public class PannelloLibri extends JPanel {
         		rimuovi.setFocusable(false);
         		//prenota.setPreferredSize(new Dimension(10,10));
         		rimuovi.addActionListener(e -> {
-        	        elenco.rimuoviTitolo(libro);
+        			biblioteca.rimuoviTitolo(libro);
         	        rimuovi();
         	    });
         		JPanel pan = new JPanel();
@@ -324,21 +330,17 @@ public class PannelloLibri extends JPanel {
     	removeAll();
     	revalidate();
     	repaint();
+    	mode = 'u';
     	setLayout(new FlowLayout());
-    	Object[][] data = {
-                {"John", 25},
-                {"Alice", 30},
-                {"Bob", 35}
-        };
     	int nlibri = 0;
-    	for (Utente utente : utenti) {
+    	for (Utente utente : biblioteca.getListaUtenti()) {
     		nlibri++;
     		if (utente.getLibriUtente().getElenco().size()!=0)
     			nlibri += utente.getLibriUtente().getElenco().size()-1;
     	}
     	Object dati [][] = new Object[nlibri][2];
     	int i = 0;
-    	for (Utente utente : utenti) {
+    	for (Utente utente : biblioteca.getListaUtenti()) {
     		dati[i][0] = utente.getUsername();
     		if (utente.getLibriUtente().getElenco().size()!=0)
 	    		for (Libro libro : utente.getLibriUtente().getElenco()) {
@@ -370,6 +372,7 @@ public class PannelloLibri extends JPanel {
     	removeAll();
     	revalidate();
     	repaint();
+    	mode = 'n';
     	setLayout(new GridLayout(0, 2));
     	add(new JLabel("Username:"));
     	JTextField username = new JTextField();
@@ -385,16 +388,16 @@ public class PannelloLibri extends JPanel {
     	agg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				boolean presente = false;
-				for (Utente utente : utenti)
+				for (Utente utente : biblioteca.getListaUtenti())
 					presente = presente || utente.getUsername().equalsIgnoreCase(username.getText());
 				if (!presente) {
-					utenti.add(new Utente(username.getText()));
+					biblioteca.aggiungiUtente(new Utente(username.getText()));
 					utenti();
 				}
-				else add(new JLabel("username già preso"));
+				else JOptionPane.showMessageDialog(getParent(), "Lo username inserito è già in utilizzo", "Username non disponibile", JOptionPane.ERROR_MESSAGE);
 			}
 	    });
-    	for (int i=0; i<5; i++)
+    	for (int i=0; i<9; i++)
     		add(new JPanel());
     }
 }
