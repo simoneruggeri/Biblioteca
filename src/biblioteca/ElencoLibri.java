@@ -92,6 +92,16 @@ public class ElencoLibri {
 	public ArrayList<Libro> getElenco() {
 		return elenco;
 	}
+
+	@Override
+	public String toString() {
+		String s = "";
+		for (Libro libro : elenco)
+			s = s + "\n" + libro.getTitolo();
+		return s;
+	}
+	
+	
     
     
     //setPreferredSize(new Dimension(300, 200));

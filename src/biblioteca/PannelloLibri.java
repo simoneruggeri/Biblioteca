@@ -330,18 +330,71 @@ public class PannelloLibri extends JPanel {
                 {"Alice", 30},
                 {"Bob", 35}
         };
-    	Object dati [][] = new Object[utenti.size()][2];
+    	int nlibri = 0;
+    	for (Utente utente : utenti) {
+    		nlibri++;
+    		if (utente.getLibriUtente().getElenco().size()!=0)
+    			nlibri += utente.getLibriUtente().getElenco().size()-1;
+    	}
+    	Object dati [][] = new Object[nlibri][2];
     	int i = 0;
     	for (Utente utente : utenti) {
     		dati[i][0] = utente.getUsername();
-    	    dati[i][1] = utente.getLibriUtente().toString();
-    	    i++;
+    		if (utente.getLibriUtente().getElenco().size()!=0)
+	    		for (Libro libro : utente.getLibriUtente().getElenco()) {
+	    			dati[i][1] = libro.getTitolo();
+	    			i++;
+	    		}
+    		else i++;
     	}
     	String[] columnNames = {"username", "Libri"};
     	JTable tab = new JTable(new DefaultTableModel(dati, columnNames));
+    	tab.setPreferredScrollableViewportSize(new Dimension(410,nlibri*16));
     	JScrollPane sp = new JScrollPane(tab);
-        add(sp);
+    	setLayout(new BorderLayout());
+    	//setLayout(new GridLayout(0,1));
+    	JButton addUser = new JButton("Nuovo Utente");
+    	addUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				nuovoUtente();
+			}
+	    });
+    	JPanel addUserPanel = new JPanel();
+    	addUserPanel.add(addUser);
+    	add(addUserPanel, BorderLayout.NORTH);
+        add(sp,BorderLayout.CENTER);
     	//add(tab);
-    	
+    }
+    
+    public void nuovoUtente() {
+    	removeAll();
+    	revalidate();
+    	repaint();
+    	setLayout(new GridLayout(0, 2));
+    	add(new JLabel("Username:"));
+    	JTextField username = new JTextField();
+    	JPanel upan = new JPanel();
+    	username.setPreferredSize(new Dimension(206, 25));
+    	upan.add(username);
+    	add(upan);
+    	add(new JPanel());
+    	JButton agg = new JButton("Aggiungi");
+    	JPanel aggpan = new JPanel();
+    	aggpan.add(agg);
+    	add(aggpan);
+    	agg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				boolean presente = false;
+				for (Utente utente : utenti)
+					presente = presente || utente.getUsername().equalsIgnoreCase(username.getText());
+				if (!presente) {
+					utenti.add(new Utente(username.getText()));
+					utenti();
+				}
+				else add(new JLabel("username già preso"));
+			}
+	    });
+    	for (int i=0; i<5; i++)
+    		add(new JPanel());
     }
 }
