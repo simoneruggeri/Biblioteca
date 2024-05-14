@@ -11,25 +11,26 @@ import javax.swing.JScrollPane;
 
 public class BibliotecaMenu extends JPanel{
 
+	
 	private PannelloLibri pannello;
 	public BibliotecaMenu(PannelloLibri pannello) {
 	
 		this.pannello = pannello;
 		setLayout(new GridLayout(0,1));
 		
-		JButton visualizzaButton = new JButton("Visualizza Catalogo");
+		JButton visualizzaButton = new JButton(Impostazioni.VISUALIZZA_CATALOGO);
 		visualizzaButton.setFocusable(false);
-		JButton utentiButton = new JButton("Visualizza Utenti");
+		JButton utentiButton = new JButton(Impostazioni.VISUALIZZA_UTENTI);
 		utentiButton.setFocusable(false);
-		JButton aggiungiButton = new JButton("Aggiungi Titolo");
+		JButton aggiungiButton = new JButton(Impostazioni.AGGIUNGI_TITOLO);
 		aggiungiButton.setFocusable(false);
-		JButton rimuoviButton = new JButton("Rimuovi Titolo");
+		JButton rimuoviButton = new JButton(Impostazioni.RIMUOVI_TITOLO);
 		rimuoviButton.setFocusable(false);
-		JButton prenotaButton = new JButton("Prenota Libro");
+		JButton prenotaButton = new JButton(Impostazioni.PRENOTA_LIBRO);
 		prenotaButton.setFocusable(false);
-		JButton restituisciButton = new JButton("Restituisci Libro");
+		JButton restituisciButton = new JButton(Impostazioni.RESTITUISCI_LIBRO);
 		restituisciButton.setFocusable(false);
-		JButton esciButton = new JButton("Esci");
+		JButton esciButton = new JButton(Impostazioni.ESCI);
 		esciButton.setFocusable(false);
 		
 		add(visualizzaButton);

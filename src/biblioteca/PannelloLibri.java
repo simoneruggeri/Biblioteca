@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,11 +11,13 @@ import java.awt.*;
 
 public class PannelloLibri extends JPanel {
     
+
+	
 	private Biblioteca biblioteca;
 	private String ricerca;
 	private char mode;
 	int sel=0;
-	String[] tipi = {"titolo","autore","genere","anno"};
+	String[] tipi = {Impostazioni.TITOLO,Impostazioni.AUTORE,Impostazioni.GENERE,Impostazioni.ANNO};
 	
     public PannelloLibri(Biblioteca biblioteca) {
     	this.biblioteca = biblioteca;
@@ -35,9 +36,9 @@ public class PannelloLibri extends JPanel {
         	if (libro.getStato() && libro.isRicercato()) {
         		disp++;
         		JPanel panLib = libro.toPanel();
-        		panLib.setPreferredSize(new Dimension(10,80));
+        		panLib.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(panLib);
-        		JButton prenota = new JButton("Prenota");
+        		JButton prenota = new JButton(Impostazioni.TESTO_PULSANTE_PRENOTA);
         		prenota.setFocusable(false);
 
         		
@@ -47,8 +48,8 @@ public class PannelloLibri extends JPanel {
         	    	repaint();
         	    	setLayout(new GridLayout(0, 2));
         	    	JPanel labelPanel = new JPanel();
-        	    	JLabel eti = new JLabel("username:");
-        	    	eti.setPreferredSize(new Dimension(206, 25));
+        	    	JLabel eti = new JLabel(Impostazioni.TESTO_ETICHETTA_USERNAME);
+        	    	eti.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
         	    	labelPanel.add(eti);
         	    	add(labelPanel);
         	    	JComboBox<String> combo = new JComboBox<>();
@@ -57,7 +58,7 @@ public class PannelloLibri extends JPanel {
         	            combo.addItem(utente.getUsername());
         	        }
         	    	JPanel pan = new JPanel();
-        	    	combo.setPreferredSize(new Dimension(206, 25));
+        	    	combo.setPreferredSize(new Dimension(Impostazioni.WIDTH_206,Impostazioni.HEIGHT_25));
         	    	combo.addActionListener(new ActionListener() {
         	    		public void actionPerformed(ActionEvent e) {
         	    			String usernameSelezionato = (String) combo.getSelectedItem();
@@ -89,7 +90,7 @@ public class PannelloLibri extends JPanel {
         if (disp<5)
         	for (int i=0; i<6-disp; i++) {
         		JPanel vuoto = new JPanel();
-        		vuoto.setPreferredSize(new Dimension(10,80));
+        		vuoto.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(vuoto);
         		add(vuoto);
         	}
@@ -107,7 +108,7 @@ public class PannelloLibri extends JPanel {
         	if (!libro.getStato() && libro.isRicercato()) {
         		disp++;
         		JPanel panLib = libro.toPanel();
-        		panLib.setPreferredSize(new Dimension(10,80));
+        		panLib.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(panLib);
         		JButton restituisci = new JButton("Restituisci");
         		restituisci.setFocusable(false);
@@ -131,7 +132,7 @@ public class PannelloLibri extends JPanel {
         if (disp<5)
         	for (int i=0; i<6-disp; i++) {
         		JPanel vuoto = new JPanel();
-        		vuoto.setPreferredSize(new Dimension(10,80));
+        		vuoto.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(vuoto);
         		add(vuoto);
         	} 
@@ -158,22 +159,22 @@ public class PannelloLibri extends JPanel {
     	combo1.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
     			switch ((String) combo1.getSelectedItem()) {
-    			case "titolo":
+    			case Impostazioni.TITOLO:
     				biblioteca.getListaLibri().ordinaPerTitolo();
     				sel=0;
     				mostra();
     				break;
-    			case "autore":
+    			case Impostazioni.AUTORE:
     				biblioteca.getListaLibri().ordinaPerAutore();
     				sel=1;
     				mostra();
     				break;
-    			case "genere":
+    			case Impostazioni.GENERE:
     				biblioteca.getListaLibri().ordinaPerGenere();
     				sel=2;
     				mostra();
     				break;
-    			case "anno":
+    			case Impostazioni.ANNO:
     				biblioteca.getListaLibri().ordinaPerAnno();
     				sel=3;
     				mostra();
@@ -212,7 +213,7 @@ public class PannelloLibri extends JPanel {
         if (disp<5)
         	for (int i=0; i<6-disp; i++) {
         		JPanel vuoto = new JPanel();
-        		vuoto.setPreferredSize(new Dimension(10,80));
+        		vuoto.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(vuoto);
         		add(vuoto);
         	}
@@ -252,26 +253,26 @@ public class PannelloLibri extends JPanel {
     	add(new JLabel("Titolo:"));
     	JTextField titolo = new JTextField();
     	JPanel tpan = new JPanel();
-    	titolo.setPreferredSize(new Dimension(206, 25));
+    	titolo.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	tpan.add(titolo);
     	add(tpan);
     	add(new JLabel("Autore:"));
     	JTextField autore = new JTextField();
     	JPanel apan = new JPanel();
-    	autore.setPreferredSize(new Dimension(206, 25));
+    	autore.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	apan.add(autore);
     	add(apan);
     	add(new JLabel("Genere:"));
     	JTextField genere = new JTextField();
     	JPanel gpan = new JPanel();
-    	genere.setPreferredSize(new Dimension(206, 25));
+    	genere.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	gpan.add(genere);
     	add(gpan);
     	add(new JLabel("Anno:"));
     	JComboBox<String> combo = new JComboBox<>(anni);
     	//combo.setEditable(true);
     	JPanel cpan = new JPanel();
-    	combo.setPreferredSize(new Dimension(206, 25));
+    	combo.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	cpan.add(combo);
     	add(cpan);
     	add(new JPanel());
@@ -305,7 +306,7 @@ public class PannelloLibri extends JPanel {
         	if (libro.getStato() && libro.isRicercato()) {
         		disp++;
         		JPanel panLib = libro.toPanel();
-        		panLib.setPreferredSize(new Dimension(10,80));
+        		panLib.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(panLib);
         		JButton rimuovi = new JButton("Rimuovi");
         		rimuovi.setFocusable(false);
@@ -323,7 +324,7 @@ public class PannelloLibri extends JPanel {
         if (disp<5)
         	for (int i=0; i<6-disp; i++) {
         		JPanel vuoto = new JPanel();
-        		vuoto.setPreferredSize(new Dimension(10,80));
+        		vuoto.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(vuoto);
         		add(vuoto);
         	} 
@@ -380,7 +381,7 @@ public class PannelloLibri extends JPanel {
     	add(new JLabel("Username:"));
     	JTextField username = new JTextField();
     	JPanel upan = new JPanel();
-    	username.setPreferredSize(new Dimension(206, 25));
+    	username.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	upan.add(username);
     	add(upan);
     	add(new JPanel());
