@@ -22,11 +22,13 @@ public class Biblioteca{
 	}
 	
 	public void aggiungiTitolo(Libro libro) {
-		listaLibri.aggiungiTitolo(libro);
+		if (!listaLibri.presente(libro))
+			listaLibri.aggiungiTitolo(libro);
 	}
 	
 	public void rimuoviTitolo(Libro libro) {
-		listaLibri.rimuoviTitolo(libro);
+		if (listaLibri.presente(libro))
+			listaLibri.rimuoviTitolo(libro);
 	}
 	
 	public void ricerca(String s) {

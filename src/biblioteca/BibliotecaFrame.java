@@ -2,6 +2,8 @@ package biblioteca;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.awt.*;
@@ -16,12 +18,14 @@ public class BibliotecaFrame extends JFrame{
 	JPanel startPanel = new JPanel();
 	JTextField casella;
 	Biblioteca biblio; 
+	FileManager filemanager;
 	
 	public BibliotecaFrame(String s, Biblioteca bib) {
 		super(s);
 		setSize(600,400);
 		
 		biblio = bib;
+		this.filemanager = new FileManager();
 		casella = new JTextField();
 		startPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 10));
 	
@@ -51,8 +55,18 @@ public class BibliotecaFrame extends JFrame{
 			}
 	    });
 		setResizable(false);
+		addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	salva();
+            }
+        });
 		
 		
+	}
+	
+	public void salva() {
+		filemanager.scriviSuFile(biblio, Impostazioni.NOME_FILE_BIBLIOTECA);
 	}
 	
 	public void menu() {

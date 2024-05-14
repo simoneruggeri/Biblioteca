@@ -400,4 +400,9 @@ public class PannelloLibri extends JPanel {
     	for (int i=0; i<9; i++)
     		add(new JPanel());
     }
+    
+    public void salva() {
+    	FileManager filemanager = new FileManager();
+		filemanager.scriviSuFile(biblioteca, Impostazioni.NOME_FILE_BIBLIOTECA);
+    }
 }
