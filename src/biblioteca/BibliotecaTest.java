@@ -10,5 +10,6 @@ public class BibliotecaTest {
 		BibliotecaFrame frame = new BibliotecaFrame("Biblioteca", new Biblioteca());
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		System.out.println("ok");
 		}
 }
