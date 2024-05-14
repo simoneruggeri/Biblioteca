@@ -1,0 +1,1 @@
+{"listaLibri":{"elenco":[{"titolo":"dc","autore":"kiod","genere":"cd","anno":2023,"stato":false,"ricercato":true}]},"listaUtenti":[{"username":"dcdc","prenotazioni":[{"libroPrenotato":{"titolo":"dc","autore":"kiod","genere":"cd","anno":2023,"stato":false,"ricercato":true},"scadenza":{"giorno":14,"mese":6,"anno":2024}}]}]}

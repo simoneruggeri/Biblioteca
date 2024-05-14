@@ -5,20 +5,24 @@ import java.time.LocalDate;
 public class Prenotazione {
 
 	private Libro libroPrenotato;
-	private LocalDate scadenza;
+	private Data scadenza;
 	
 	public Prenotazione(Libro libro) {
 		this.libroPrenotato = libro;
-		this.scadenza = LocalDate.now().plusMonths(1);
+		this.scadenza = new Data(LocalDate.now().getDayOfMonth(),LocalDate.now().plusMonths(1).getMonthValue(),LocalDate.now().getYear());
 	}
 
 	public Libro getLibroPrenotato() {
 		return libroPrenotato;
 	}
 
-	public LocalDate getScadenza() {
+	public Data getScadenza() {
 		return scadenza;
 	}
+	
+	/*public int getGiorni() {
+		return 
+	}*/
 	
 	
 }

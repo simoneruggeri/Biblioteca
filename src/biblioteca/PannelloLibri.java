@@ -343,7 +343,7 @@ public class PannelloLibri extends JPanel {
     		dati[i][0] = utente.getUsername();
     		if (utente.getPrenotazioni().size()!=0)
 	    		for (Prenotazione prenotazione : utente.getPrenotazioni()) {
-	    			int giorni = prenotazione.getScadenza().until(LocalDate.now()).getDays();
+	    			int giorni = 2;
 	    			String cella = prenotazione.getLibroPrenotato().getTitolo() + "(" + Integer.toString(giorni) + "giorni)";
 	    			dati[i][1] = cella;
 	    			i++;
