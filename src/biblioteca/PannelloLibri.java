@@ -390,11 +390,12 @@ public class PannelloLibri extends JPanel {
 				boolean presente = false;
 				for (Utente utente : biblioteca.getListaUtenti())
 					presente = presente || utente.getUsername().equalsIgnoreCase(username.getText());
-				if (!presente) {
+				if (username.getText().isBlank()) {
+					JOptionPane.showMessageDialog(getParent(), "Lo username inserito non è valido", "Username non valido", JOptionPane.ERROR_MESSAGE);
+				}else if (!presente) {
 					biblioteca.aggiungiUtente(new Utente(username.getText()));
 					utenti();
-				}
-				else JOptionPane.showMessageDialog(getParent(), "Lo username inserito è già in utilizzo", "Username non disponibile", JOptionPane.ERROR_MESSAGE);
+				}else JOptionPane.showMessageDialog(getParent(), "Lo username inserito è già in utilizzo", "Username non disponibile", JOptionPane.ERROR_MESSAGE);
 			}
 	    });
     	for (int i=0; i<9; i++)
