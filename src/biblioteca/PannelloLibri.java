@@ -3,6 +3,7 @@ package biblioteca;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -72,7 +73,6 @@ public class PannelloLibri extends JPanel {
         	                }
         	    			if (utenteSelezionato != null) {
      	                    	utenteSelezionato.prenotaUtente(libro);
-         	                    libro.prenota();
          	                    prenota();
      	                    }
                 	        
@@ -104,30 +104,25 @@ public class PannelloLibri extends JPanel {
     	setLayout(new GridLayout(0, 2));
     	int disp = 0;
     	biblioteca.ricerca(ricerca);
-        for (Libro libro : biblioteca.getListaLibri().getElenco()) {
-        	if (!libro.getStato() && libro.isRicercato()) {
-        		disp++;
-        		JPanel panLib = libro.toPanel();
-        		panLib.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
-        		add(panLib);
-        		JButton restituisci = new JButton("Restituisci");
-        		restituisci.setFocusable(false);
-        		String rest = "";
-        		for (Utente utente : biblioteca.getListaUtenti())
-        			if (utente.presente(libro))
-        				rest = utente.getUsername();
-        		restituisci.setToolTipText("In prestito a: " + rest);
-        		//prenota.setMaximumSize(new Dimension(10,10));
-        		//prenota.setPreferredSize(new Dimension(10,10));
-        		restituisci.addActionListener(e -> {
-        	        libro.restituisci();
-        	        restituisci();
-        	    });
-        		JPanel pan = new JPanel();
-            	pan.add(restituisci);
-            	//pan.setPreferredSize(new Dimension(10,10));
-            	add(pan);
-        	}
+        for (Utente rest : biblioteca.getListaUtenti()) {
+        	for (Prenotazione pr : rest.getPrenotazioni())
+	        	if (pr.getLibroPrenotato().isRicercato()) {
+	        		disp++;
+	        		JPanel panLib = pr.getLibroPrenotato().toPanel();
+	        		panLib.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
+	        		add(panLib);
+	        		JButton restituisci = new JButton("Restituisci");
+	        		restituisci.setFocusable(false);
+	        		//String rest = "";
+	        		restituisci.setToolTipText("In prestito a: " + rest.getUsername());
+	        		restituisci.addActionListener(e -> {
+	        			rest.restituisciUtente(pr.getLibroPrenotato());
+	        	        restituisci();
+	        	    });
+	        		JPanel pan = new JPanel();
+	            	pan.add(restituisci);
+	            	add(pan);
+	        	}
         }
         if (disp<5)
         	for (int i=0; i<6-disp; i++) {
@@ -339,21 +334,23 @@ public class PannelloLibri extends JPanel {
     	int nlibri = 0;
     	for (Utente utente : biblioteca.getListaUtenti()) {
     		nlibri++;
-    		if (utente.getLibriUtente().getElenco().size()!=0)
-    			nlibri += utente.getLibriUtente().getElenco().size()-1;
+    		if (utente.getPrenotazioni().size()!=0)
+    			nlibri += utente.getPrenotazioni().size()-1;
     	}
     	Object dati [][] = new Object[nlibri][2];
     	int i = 0;
     	for (Utente utente : biblioteca.getListaUtenti()) {
     		dati[i][0] = utente.getUsername();
-    		if (utente.getLibriUtente().getElenco().size()!=0)
-	    		for (Libro libro : utente.getLibriUtente().getElenco()) {
-	    			dati[i][1] = libro.getTitolo();
+    		if (utente.getPrenotazioni().size()!=0)
+	    		for (Prenotazione prenotazione : utente.getPrenotazioni()) {
+	    			int giorni = prenotazione.getScadenza().until(LocalDate.now()).getDays();
+	    			String cella = prenotazione.getLibroPrenotato().getTitolo() + "(" + Integer.toString(giorni) + "giorni)";
+	    			dati[i][1] = cella;
 	    			i++;
 	    		}
     		else i++;
     	}
-    	String[] columnNames = {"username", "Libri"};
+    	String[] columnNames = {"username", "Libri(scadenza)"};
     	JTable tab = new JTable(new DefaultTableModel(dati, columnNames));
     	tab.setPreferredScrollableViewportSize(new Dimension(410,nlibri*16));
     	JScrollPane sp = new JScrollPane(tab);

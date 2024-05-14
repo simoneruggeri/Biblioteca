@@ -1,13 +1,17 @@
 package biblioteca;
 
+import java.util.ArrayList;
+
 public class Utente {
 
 	private String username;
-	private ElencoLibri libriUtente;
+	//private ElencoLibri libriUtente;
+	private ArrayList<Prenotazione> prenotazioni;
 	
 	public Utente(String nome) {
 		username = nome;
-		libriUtente = new ElencoLibri();
+		//libriUtente = new ElencoLibri();
+		prenotazioni = new ArrayList<Prenotazione>();
 	}
 
 	public String getUsername() {
@@ -18,10 +22,43 @@ public class Utente {
 		this.username = username;
 	}
 
-	public ElencoLibri getLibriUtente() {
-		return libriUtente;
+	
+	
+	public ArrayList<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
 	}
 	
+	public void prenotaUtente(Libro libro) {
+		prenotazioni.add(new Prenotazione(libro));
+		libro.prenota();
+	}
+	
+	public void restituisciUtente(Libro libro) {
+		Prenotazione pren = null;
+		for (Prenotazione booking : prenotazioni)
+			if (booking.getLibroPrenotato().equals(libro)) {
+				pren = booking;
+				libro.restituisci();
+			}
+		if (pren!=null)
+			prenotazioni.remove(pren);
+	}
+	
+	public boolean presente(Libro libro) {
+		for (Prenotazione booking : prenotazioni)
+			if (booking.getLibroPrenotato().equals(libro))
+				return true;
+		return false;
+	}
+	
+	public ElencoLibri getLibriUtente(){
+		ElencoLibri elenco = new ElencoLibri();
+		for (Prenotazione booking : prenotazioni)
+			elenco.aggiungiTitolo(booking.getLibroPrenotato());
+		return elenco;
+	}
+	
+/*
 	public void prenotaUtente(Libro libro) {
 		libriUtente.aggiungiTitolo(libro);
 	}
@@ -33,4 +70,6 @@ public class Utente {
 	public boolean presente(Libro libro) {
 		return libriUtente.presente(libro);
 	}
+	
+	*/
 }
