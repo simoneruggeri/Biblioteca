@@ -52,7 +52,7 @@ public class PannelloLibri extends JPanel {
         	    	labelPanel.add(eti);
         	    	add(labelPanel);
         	    	JComboBox<String> combo = new JComboBox<>();
-        	    	combo.addItem("------------------------------------------");
+        	    	combo.addItem(Impostazioni.SEPARATORE);
         	    	for (Utente utente : biblioteca.getListaUtenti()) {
         	            combo.addItem(utente.getUsername());
         	        }
@@ -243,9 +243,10 @@ public class PannelloLibri extends JPanel {
     	revalidate();
     	repaint();
     	mode = 'a';
-    	String[] anni = new String[1025];
+    	String[] anni = new String[1026];
+    	anni[0] = Impostazioni.SEPARATORE;
     	for (int i = 2024; i > 999; i--) {
-    	    anni[2024-i] = Integer.toString(i);
+    	    anni[2025-i] = Integer.toString(i);
     	}
     	setLayout(new GridLayout(0, 2));
     	add(new JLabel("Titolo:"));
@@ -281,8 +282,10 @@ public class PannelloLibri extends JPanel {
     	add(aggpan);
     	agg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				biblioteca.aggiungiTitolo(new Libro(titolo.getText(), autore.getText(), genere.getText(), Integer.parseInt((String) combo.getSelectedItem())));
-				mostra();
+				if (!titolo.getText().isBlank() && !autore.getText().isBlank() && !genere.getText().isBlank() && !((String) combo.getSelectedItem()).equalsIgnoreCase(Impostazioni.SEPARATORE)) {
+					biblioteca.aggiungiTitolo(new Libro(titolo.getText(), autore.getText(), genere.getText(), Integer.parseInt((String) combo.getSelectedItem())));
+					mostra();
+				}else JOptionPane.showMessageDialog(getParent(), "Compilare tutti i campi presenti", "Titolo non valido", JOptionPane.ERROR_MESSAGE);
 			}
 	    });
     	for (int i=0; i<5; i++)

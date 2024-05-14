@@ -75,7 +75,7 @@ public class BibliotecaFrame extends JFrame{
 		JPanel visual = new JPanel(new BorderLayout());
 		visual.add(casella, BorderLayout.NORTH);
 		
-		
+		/*
 		Libro libro1 = new Libro("La Divina Commedia", "Dante Alighieri", "Commedia", 1215);
 		Libro libro2 = new Libro("Viva La Pancia", "Marco Reus", "Giallo", 2027);
 		Libro libro3 = new Libro("Kinder Pingui", "Magui Corceiro", "Drammatico", 1456);
@@ -95,6 +95,7 @@ public class BibliotecaFrame extends JFrame{
 		biblio.aggiungiUtente(new Utente("pinodaniele"));
 		biblio.aggiungiUtente(new Utente("bingo"));
 		
+		*/
 		PannelloLibri pan = new PannelloLibri(biblio);
 		//pan.ricerca(casella.getText());
 		casella.getDocument().addDocumentListener(new DocumentListener() {
