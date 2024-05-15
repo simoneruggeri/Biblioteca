@@ -17,6 +17,7 @@ public class PannelloLibri extends JPanel {
 	private Biblioteca biblioteca;
 	private String ricerca;
 	private char mode;
+	Libro librocheck=new Libro("d","b","b",5);
 	int sel=0;
 	String[] tipi = {Impostazioni.TITOLO,Impostazioni.AUTORE,Impostazioni.GENERE,Impostazioni.ANNO};
 	
@@ -33,6 +34,9 @@ public class PannelloLibri extends JPanel {
     	setLayout(new GridLayout(0, 2));
     	int disp = 0;
     	biblioteca.ricerca(ricerca);
+    	for (Libro libro : biblioteca.getListaLibri().getElenco())
+    		if (libro.equals(librocheck))
+    			System.out.println(libro==librocheck);
         for (Libro libro : biblioteca.getListaLibri().getElenco()) {
         	if (libro.getStato() && libro.isRicercato()) {
         		disp++;
@@ -116,6 +120,7 @@ public class PannelloLibri extends JPanel {
 	        		//String rest = "";
 	        		restituisci.setToolTipText("In prestito a: " + rest.getUsername());
 	        		restituisci.addActionListener(e -> {
+	        			librocheck = pr.getLibroPrenotato();
 	        			rest.restituisciUtente(pr.getLibroPrenotato());
 	        	        restituisci();
 	        	    });
@@ -186,6 +191,7 @@ public class PannelloLibri extends JPanel {
     	//add(combo1);
     	int disp = 0;
         for (Libro libro : biblioteca.getListaLibri().getElenco()) {
+        	//System.out.println(libro.getStato());
         	if(libro.isRicercato()) {
         		add(libro.toPanel());
         		disp++;
@@ -343,8 +349,12 @@ public class PannelloLibri extends JPanel {
     		dati[i][0] = utente.getUsername();
     		if (utente.getPrenotazioni().size()!=0)
 	    		for (Prenotazione prenotazione : utente.getPrenotazioni()) {
-	    			int giorni = 2;
-	    			String cella = prenotazione.getLibroPrenotato().getTitolo() + "(" + Integer.toString(giorni) + "giorni)";
+	    			int giorni = prenotazione.getScadenza().differenzaGiorni(new Data(LocalDate.now().getDayOfMonth(),LocalDate.now().getMonthValue(),LocalDate.now().getYear()));
+	    			String scadenza = "";
+	    			if (giorni>0) {
+	    				scadenza = "(" + Integer.toString(giorni) + "giorni)";
+	    			}else scadenza = "scaduto";
+	    			String cella = prenotazione.getLibroPrenotato().getTitolo() + scadenza;
 	    			dati[i][1] = cella;
 	    			i++;
 	    		}

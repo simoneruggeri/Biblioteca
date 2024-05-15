@@ -2,6 +2,8 @@ package biblioteca;
 
 import java.time.LocalDate;
 
+import com.google.gson.Gson;
+
 public class Prenotazione {
 
 	private Libro libroPrenotato;
@@ -16,6 +18,10 @@ public class Prenotazione {
 		return libroPrenotato;
 	}
 
+	public void setLibroPrenotato(Libro libroPrenotato) {
+		this.libroPrenotato = libroPrenotato;
+	}
+
 	public Data getScadenza() {
 		return scadenza;
 	}
@@ -24,5 +30,9 @@ public class Prenotazione {
 		return 
 	}*/
 	
+	public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
 	
 }

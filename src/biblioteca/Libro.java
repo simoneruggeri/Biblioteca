@@ -7,6 +7,8 @@ import java.util.Objects;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.google.gson.Gson;
+
 public class Libro {
 
 	private String titolo;
@@ -114,10 +116,10 @@ public class Libro {
     	return panel;
     }
     
-	@Override
+	/*@Override
 	public String toString() {
 		return "Titolo: " + titolo + "Autore:" + autore + "\nGenere: " + genere + "\nAnno: " + anno;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {
@@ -136,6 +138,11 @@ public class Libro {
 		return anno == other.anno && Objects.equals(autore, other.autore) && Objects.equals(genere, other.genere)
 				&& Objects.equals(titolo, other.titolo);
 	}
+	
+	public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
 
 	
 	

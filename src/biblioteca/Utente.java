@@ -2,6 +2,8 @@ package biblioteca;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 public class Utente {
 
 	private String username;
@@ -38,7 +40,7 @@ public class Utente {
 		for (Prenotazione booking : prenotazioni)
 			if (booking.getLibroPrenotato().equals(libro)) {
 				pren = booking;
-				libro.restituisci();
+				pren.getLibroPrenotato().restituisci();
 			}
 		if (pren!=null)
 			prenotazioni.remove(pren);
@@ -72,4 +74,9 @@ public class Utente {
 	}
 	
 	*/
+	
+	public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
 }
