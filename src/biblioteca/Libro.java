@@ -115,11 +115,6 @@ public class Libro {
     	panel.add(new JLabel(toStringAnno()));
     	return panel;
     }
-    
-	/*@Override
-	public String toString() {
-		return "Titolo: " + titolo + "Autore:" + autore + "\nGenere: " + genere + "\nAnno: " + anno;
-	}*/
 
 	@Override
 	public int hashCode() {

@@ -83,6 +83,29 @@ public class Biblioteca{
             listaUtenti.add(utente);
         }
     }
+
+	public Utente utentePresente(String username) {
+		for (Utente utente : listaUtenti) {
+            if (utente.getUsername().equals(username))
+                return utente;
+            }
+        return null;
+	}
+		
+	public void ordinaPerTitolo() {
+		listaLibri.ordinaPerTitolo();
+	}
 	
+	public void ordinaPerGenere() {
+		listaLibri.ordinaPerGenere();
+	}
+		
+	public void ordinaPerAutore() {
+		listaLibri.ordinaPerAutore();
+	}
+	
+	public void ordinaPerAnno() {
+		listaLibri.ordinaPerAnno();
+	}
 	
 }

@@ -11,7 +11,7 @@ public class Prenotazione {
 	
 	public Prenotazione(Libro libro) {
 		this.libroPrenotato = libro;
-		this.scadenza = new Data(LocalDate.now().getDayOfMonth(),LocalDate.now().plusMonths(1).getMonthValue(),LocalDate.now().getYear());
+		this.scadenza = Data.converti(LocalDate.now().plusMonths(1));
 	}
 
 	public Libro getLibroPrenotato() {
@@ -25,10 +25,6 @@ public class Prenotazione {
 	public Data getScadenza() {
 		return scadenza;
 	}
-	
-	/*public int getGiorni() {
-		return 
-	}*/
 	
 	public String toJson() {
         Gson gson = new Gson();

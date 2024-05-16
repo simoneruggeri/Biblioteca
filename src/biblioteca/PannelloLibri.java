@@ -12,14 +12,10 @@ import java.awt.*;
 
 public class PannelloLibri extends JPanel {
     
-
-	
 	private Biblioteca biblioteca;
 	private String ricerca;
 	private char mode;
-	Libro librocheck=new Libro("d","b","b",5);
-	int sel=0;
-	String[] tipi = {Impostazioni.TITOLO,Impostazioni.AUTORE,Impostazioni.GENERE,Impostazioni.ANNO};
+	int selettoreOrdine=0;
 	
     public PannelloLibri(Biblioteca biblioteca) {
     	this.biblioteca = biblioteca;
@@ -34,63 +30,55 @@ public class PannelloLibri extends JPanel {
     	setLayout(new GridLayout(0, 2));
     	int disp = 0;
     	biblioteca.ricerca(ricerca);
-    	for (Libro libro : biblioteca.getListaLibri().getElenco())
-    		if (libro.equals(librocheck))
-    			System.out.println(libro==librocheck);
+    	
         for (Libro libro : biblioteca.getListaLibri().getElenco()) {
         	if (libro.getStato() && libro.isRicercato()) {
         		disp++;
-        		JPanel panLib = libro.toPanel();
-        		panLib.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
-        		add(panLib);
-        		JButton prenota = new JButton(Impostazioni.TESTO_PULSANTE_PRENOTA);
-        		prenota.setFocusable(false);
-
         		
-        		prenota.addActionListener(e -> {
+        		JPanel pannelloLibro = libro.toPanel();
+        		pannelloLibro.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
+        		add(pannelloLibro);
+        		
+        		JButton prenotaButton = new JButton(Impostazioni.TESTO_PULSANTE_PRENOTA);
+        		prenotaButton.setFocusable(false);
+        		prenotaButton.addActionListener(e -> {
         			removeAll();
         	    	revalidate();
         	    	repaint();
         	    	setLayout(new GridLayout(0, 2));
+        	    	
         	    	JPanel labelPanel = new JPanel();
-        	    	JLabel eti = new JLabel(Impostazioni.TESTO_ETICHETTA_USERNAME);
-        	    	eti.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
-        	    	labelPanel.add(eti);
+        	    	JLabel etichettaUsername = new JLabel(Impostazioni.TESTO_ETICHETTA_USERNAME);
+        	    	etichettaUsername.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
+        	    	labelPanel.add(etichettaUsername);
         	    	add(labelPanel);
-        	    	JComboBox<String> combo = new JComboBox<>();
-        	    	combo.addItem(Impostazioni.SEPARATORE);
-        	    	for (Utente utente : biblioteca.getListaUtenti()) {
-        	            combo.addItem(utente.getUsername());
-        	        }
-        	    	JPanel pan = new JPanel();
-        	    	combo.setPreferredSize(new Dimension(Impostazioni.WIDTH_206,Impostazioni.HEIGHT_25));
-        	    	combo.addActionListener(new ActionListener() {
+        	    	
+        	    	JComboBox<String> sceltaUtenti = new JComboBox<>();
+        	    	sceltaUtenti.addItem(Impostazioni.SEPARATORE);
+        	    	for (Utente utente : biblioteca.getListaUtenti()) 
+        	    		sceltaUtenti.addItem(utente.getUsername());
+        	 
+        	    	sceltaUtenti.setPreferredSize(new Dimension(Impostazioni.WIDTH_206,Impostazioni.HEIGHT_25));
+        	    	sceltaUtenti.addActionListener(new ActionListener() {
         	    		public void actionPerformed(ActionEvent e) {
-        	    			String usernameSelezionato = (String) combo.getSelectedItem();
-        	    			
-        	    			Utente utenteSelezionato = null;
-        	    			for (Utente utente : biblioteca.getListaUtenti()) {
-        	                    if (utente.getUsername().equals(usernameSelezionato)) {
-        	                        utenteSelezionato = utente;
-        	                        break;
-        	                    }
-        	                }
-        	    			if (utenteSelezionato != null) {
+        	    			String usernameSelezionato = (String) sceltaUtenti.getSelectedItem();
+        	    			Utente utenteSelezionato = biblioteca.utentePresente(usernameSelezionato);
+        	    			if (utenteSelezionato != null) 
      	                    	utenteSelezionato.prenotaUtente(libro);
-         	                    prenota();
-     	                    }
-                	        
         	    		}
         	    	});
-        	    	pan.add(combo);
-        	    	add(pan);
+        	    	
+        	    	JPanel pannelloSceltaUtenti = new JPanel();
+        	    	pannelloSceltaUtenti.add(sceltaUtenti);
+        	    	add(pannelloSceltaUtenti);
         	        
         	    });
-        		JPanel pan = new JPanel();
-            	pan.add(prenota);
-            	add(pan);
+        		JPanel prenotaButtonPanel = new JPanel();
+        		prenotaButtonPanel.add(prenotaButton);
+            	add(prenotaButtonPanel);
         	}
         }
+        
         if (disp<5)
         	for (int i=0; i<6-disp; i++) {
         		JPanel vuoto = new JPanel();
@@ -105,30 +93,33 @@ public class PannelloLibri extends JPanel {
     	revalidate();
     	repaint();
     	mode = 'r';
+    	
     	setLayout(new GridLayout(0, 2));
     	int disp = 0;
     	biblioteca.ricerca(ricerca);
-        for (Utente rest : biblioteca.getListaUtenti()) {
-        	for (Prenotazione pr : rest.getPrenotazioni())
-	        	if (pr.getLibroPrenotato().isRicercato()) {
+    	
+        for (Utente utente : biblioteca.getListaUtenti()) {
+        	for (Prenotazione prenotazione : utente.getPrenotazioni())
+	        	if (prenotazione.getLibroPrenotato().isRicercato()) {
 	        		disp++;
-	        		JPanel panLib = pr.getLibroPrenotato().toPanel();
-	        		panLib.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
-	        		add(panLib);
-	        		JButton restituisci = new JButton("Restituisci");
-	        		restituisci.setFocusable(false);
-	        		//String rest = "";
-	        		restituisci.setToolTipText("In prestito a: " + rest.getUsername());
-	        		restituisci.addActionListener(e -> {
-	        			librocheck = pr.getLibroPrenotato();
-	        			rest.restituisciUtente(pr.getLibroPrenotato());
-	        	        restituisci();
+	        		
+	        		JPanel pannelloLibro = prenotazione.getLibroPrenotato().toPanel();
+	        		pannelloLibro.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
+	        		add(pannelloLibro);
+	        		
+	        		JButton restituisciButton = new JButton("Restituisci");
+	        		restituisciButton.setFocusable(false);
+	        		restituisciButton.setToolTipText("In prestito a: " + utente.getUsername());
+	        		restituisciButton.addActionListener(e -> {
+	        			utente.restituisciUtente(prenotazione.getLibroPrenotato());
 	        	    });
-	        		JPanel pan = new JPanel();
-	            	pan.add(restituisci);
-	            	add(pan);
+	        		
+	        		JPanel restituisciButtonPanel = new JPanel();
+	        		restituisciButtonPanel.add(restituisciButton);
+	            	add(restituisciButtonPanel);
 	        	}
         }
+        
         if (disp<5)
         	for (int i=0; i<6-disp; i++) {
         		JPanel vuoto = new JPanel();
@@ -149,49 +140,48 @@ public class PannelloLibri extends JPanel {
     	
     	add(new JLabel("Ordina per:"));
     	
-    	String[] sorted = new String[4];
+    	String[] campiOrdinati = new String[4];
     	for(int i = 0; i<4; i++) {
-    		sorted[i] = tipi[(sel+i)%4];
+    		campiOrdinati[i] = Impostazioni.CAMPI_ORDINA[(selettoreOrdine+i)%4];
     	}
     	
     	
-    	JComboBox<String> combo1 = new JComboBox<>(sorted);
-    	combo1.addActionListener(new ActionListener() {
+    	JComboBox<String> sceltaOrdine = new JComboBox<>(campiOrdinati);
+    	sceltaOrdine.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			switch ((String) combo1.getSelectedItem()) {
+    			switch ((String) sceltaOrdine.getSelectedItem()) {
     			case Impostazioni.TITOLO:
-    				biblioteca.getListaLibri().ordinaPerTitolo();
-    				sel=0;
+    				biblioteca.ordinaPerTitolo();
+    				selettoreOrdine=0;
     				mostra();
     				break;
     			case Impostazioni.AUTORE:
-    				biblioteca.getListaLibri().ordinaPerAutore();
-    				sel=1;
+    				biblioteca.ordinaPerAutore();
+    				selettoreOrdine=1;
     				mostra();
     				break;
     			case Impostazioni.GENERE:
-    				biblioteca.getListaLibri().ordinaPerGenere();
-    				sel=2;
+    				biblioteca.ordinaPerGenere();
+    				selettoreOrdine=2;
     				mostra();
     				break;
     			case Impostazioni.ANNO:
-    				biblioteca.getListaLibri().ordinaPerAnno();
-    				sel=3;
+    				biblioteca.ordinaPerAnno();
+    				selettoreOrdine=3;
     				mostra();
     				break;
     			}
     		}
     	});
 
-    	JPanel buttonPanel = new JPanel(new GridLayout(0,1));
-    	buttonPanel.add(new JLabel());
-    	buttonPanel.add(combo1);
-    	buttonPanel.add(new JLabel());
-    	add(buttonPanel);
-    	//add(combo1);
+    	JPanel sceltaPanel = new JPanel(new GridLayout(0,1));
+    	sceltaPanel.add(new JLabel());
+    	sceltaPanel.add(sceltaOrdine);
+    	sceltaPanel.add(new JLabel());
+    	add(sceltaPanel);
+    	
     	int disp = 0;
         for (Libro libro : biblioteca.getListaLibri().getElenco()) {
-        	//System.out.println(libro.getStato());
         	if(libro.isRicercato()) {
         		add(libro.toPanel());
         		disp++;
@@ -202,15 +192,16 @@ public class PannelloLibri extends JPanel {
             	} 
             	else {
             		JLabel discorosso = new JLabel(new ImageIcon(getClass().getResource("red.png")));
-            		String redTool = "";
+            		String usernamePrestito = "";
             		for (Utente utente : biblioteca.getListaUtenti())
             			if (utente.presente(libro))
-            				redTool = utente.getUsername();
-            		discorosso.setToolTipText("In prestito a: " + redTool);
+            				usernamePrestito = utente.getUsername();
+            		discorosso.setToolTipText("In prestito a: " + usernamePrestito);
             		add(discorosso);
             	}
         	}
-        } 
+        }
+        
         if (disp<5)
         	for (int i=0; i<6-disp; i++) {
         		JPanel vuoto = new JPanel();
@@ -245,11 +236,9 @@ public class PannelloLibri extends JPanel {
     	revalidate();
     	repaint();
     	mode = 'a';
-    	String[] anni = new String[1026];
-    	anni[0] = Impostazioni.SEPARATORE;
-    	for (int i = 2024; i > 999; i--) {
-    	    anni[2025-i] = Integer.toString(i);
-    	}
+    	
+    	String[] anni = Impostazioni.ANNI;
+    	
     	setLayout(new GridLayout(0, 2));
     	add(new JLabel("Titolo:"));
     	JTextField titolo = new JTextField();
@@ -257,29 +246,31 @@ public class PannelloLibri extends JPanel {
     	titolo.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	tpan.add(titolo);
     	add(tpan);
+    	
     	add(new JLabel("Autore:"));
     	JTextField autore = new JTextField();
     	JPanel apan = new JPanel();
     	autore.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	apan.add(autore);
     	add(apan);
+    	
     	add(new JLabel("Genere:"));
     	JTextField genere = new JTextField();
     	JPanel gpan = new JPanel();
     	genere.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	gpan.add(genere);
     	add(gpan);
+    	
     	add(new JLabel("Anno:"));
     	JComboBox<String> combo = new JComboBox<>(anni);
-    	//combo.setEditable(true);
     	JPanel cpan = new JPanel();
     	combo.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
     	cpan.add(combo);
     	add(cpan);
+    	
     	add(new JPanel());
     	JButton agg = new JButton("Aggiungi");
     	JPanel aggpan = new JPanel();
-    	//agg.setPreferredSize(new Dimension(206, 25));
     	aggpan.add(agg);
     	add(aggpan);
     	agg.addActionListener(new ActionListener() {
@@ -290,8 +281,8 @@ public class PannelloLibri extends JPanel {
 				}else JOptionPane.showMessageDialog(getParent(), "Compilare tutti i campi presenti", "Titolo non valido", JOptionPane.ERROR_MESSAGE);
 			}
 	    });
-    	for (int i=0; i<5; i++)
-    		add(new JPanel());
+    	
+    	vuoto(5);
     	
     }
     
@@ -409,12 +400,16 @@ public class PannelloLibri extends JPanel {
 				}else JOptionPane.showMessageDialog(getParent(), "Lo username inserito è già in utilizzo", "Username non disponibile", JOptionPane.ERROR_MESSAGE);
 			}
 	    });
-    	for (int i=0; i<9; i++)
-    		add(new JPanel());
+    	vuoto(9);
     }
     
     public void salva() {
     	FileManager filemanager = new FileManager();
 		filemanager.scriviSuFile(biblioteca, Impostazioni.NOME_FILE_BIBLIOTECA);
+    }
+    
+    public void vuoto(int n) {
+    	for (int i=0; i<n; i++)
+    		add(new JPanel()); 
     }
 }

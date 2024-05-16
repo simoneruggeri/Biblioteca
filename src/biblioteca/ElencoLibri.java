@@ -12,9 +12,7 @@ public class ElencoLibri {
 	private ArrayList<Libro> elenco;
     
     public ElencoLibri() {
-        
     	elenco = new ArrayList<Libro>();
-        
     }
     
     public void aggiungiTitolo(Libro libro) {
@@ -45,32 +43,8 @@ public class ElencoLibri {
     	}else {
     		for (Libro libro : elenco)
     			libro.setRicercato(true);
-    	}
-  	
-    		
+    	}	
     }
-    
-    
-    /*public void perTitolo(String titolo) {
-    	for (Libro libro : elenco)
-    		if (libro.getTitolo().contains(titolo))
-    			libro.setRicercato(true);
-    		else libro.setRicercato(false);
-    }
-    
-    public void perAutore(String autore) {
-    	for (Libro libro : elenco)
-    		if (libro.getAutore().contains(autore))
-    			libro.setRicercato(true);
-    		else libro.setRicercato(false);
-    }
-    
-    public void perGenere(String genere) {
-    	for (Libro libro : elenco)
-    		if (libro.getGenere().contains(genere))
-    			libro.setRicercato(true);
-    		else libro.setRicercato(false);
-    }*/
     
     public void ordinaPerTitolo() {
     	Collections.sort(this.elenco, Comparator.comparing(Libro::getTitolo));
@@ -87,7 +61,6 @@ public class ElencoLibri {
     public void ordinaPerAnno() {
     	Collections.sort(this.elenco, Comparator.comparingInt(Libro::getAnno));
     }
-    
 
 	public ArrayList<Libro> getElenco() {
 		return elenco;
@@ -108,8 +81,4 @@ public class ElencoLibri {
 		return false;
 	}
 	
-	
-    
-    
-    //setPreferredSize(new Dimension(300, 200));
 }

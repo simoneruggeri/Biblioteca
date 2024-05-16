@@ -2,6 +2,8 @@ package biblioteca;
 
 public class Impostazioni {
 
+	private static final int NUMERO_ANNI = 999;
+	private static final int ANNO_CORRENTE = 2024;
 	public static final String NOME_FILE_BIBLIOTECA = "biblioteca.json";
 	public static final String SEPARATORE = "------------------------------------------";
 	public static final String ESCI = "Esci";
@@ -22,6 +24,17 @@ public class Impostazioni {
 	public static final String GENERE = "genere";
 	public static final String AUTORE = "autore";
 	public static final String TITOLO = "titolo";
-
+	public static final String[] CAMPI_ORDINA = {TITOLO,AUTORE,GENERE,ANNO};
+	public static final int DIMENSIONE_ANNI = ANNO_CORRENTE - NUMERO_ANNI + 1;
+	public static final String[] ANNI = anni();
+	
+	public static String[] anni() {
+		String[] anni = new String[DIMENSIONE_ANNI];
+    	anni[0] = SEPARATORE;
+    	for (int i = ANNO_CORRENTE; i > NUMERO_ANNI; i--) {
+    	    anni[ANNO_CORRENTE+1-i] = Integer.toString(i);
+    	}
+    	return anni;
+	}
 
 }

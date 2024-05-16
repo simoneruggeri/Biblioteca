@@ -1,5 +1,7 @@
 package biblioteca;
 
+import java.time.LocalDate;
+
 import com.google.gson.Gson;
 
 public class Data {
@@ -35,6 +37,10 @@ public class Data {
 
         return giorni;
     }
+	
+	public static Data converti(LocalDate data) {
+		return new Data(data.getDayOfMonth(),data.getMonthValue(),data.getYear());
+	}
 	
 	public String toJson() {
         Gson gson = new Gson();

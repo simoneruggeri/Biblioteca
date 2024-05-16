@@ -7,12 +7,10 @@ import com.google.gson.Gson;
 public class Utente {
 
 	private String username;
-	//private ElencoLibri libriUtente;
 	private ArrayList<Prenotazione> prenotazioni;
 	
 	public Utente(String nome) {
 		username = nome;
-		//libriUtente = new ElencoLibri();
 		prenotazioni = new ArrayList<Prenotazione>();
 	}
 
@@ -24,7 +22,6 @@ public class Utente {
 		this.username = username;
 	}
 
-	
 	
 	public ArrayList<Prenotazione> getPrenotazioni() {
 		return prenotazioni;
@@ -59,21 +56,6 @@ public class Utente {
 			elenco.aggiungiTitolo(booking.getLibroPrenotato());
 		return elenco;
 	}
-	
-/*
-	public void prenotaUtente(Libro libro) {
-		libriUtente.aggiungiTitolo(libro);
-	}
-	
-	public void restituisciUtente(Libro libro) {
-		libriUtente.rimuoviTitolo(libro);
-	}
-	
-	public boolean presente(Libro libro) {
-		return libriUtente.presente(libro);
-	}
-	
-	*/
 	
 	public String toJson() {
         Gson gson = new Gson();
