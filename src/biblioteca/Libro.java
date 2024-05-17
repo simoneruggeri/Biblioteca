@@ -3,10 +3,8 @@ package biblioteca;
 
 import java.awt.GridLayout;
 import java.util.Objects;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import com.google.gson.Gson;
 
 public class Libro {
@@ -31,33 +29,17 @@ public class Libro {
 		return titolo;
 	}
 
-	public void setTitolo(String titolo) {
-		this.titolo = titolo;
-	}
-
 	public String getAutore() {
 		return autore;
-	}
-
-	public void setAutore(String autore) {
-		this.autore = autore;
 	}
 
 	public String getGenere() {
 		return genere;
 	}
 
-	public void setGenere(String genere) {
-		this.genere = genere;
-	}
-
 	public int getAnno() {
 		return anno;
-	}
-
-	public void setAnno(int anno) {
-		this.anno = anno;
-	}
+	}	
 	
 	public boolean getStato() {
 		return stato;
@@ -98,11 +80,6 @@ public class Libro {
         return "Anno: " + anno;
     }
     
-    public String toStringStato() {
-    	if (stato)
-    		return "Stato: Disponibile";
-    	return "Stato: Non Disponibile";
-    }
     
     public JPanel toPanel() {
     	JPanel panel = new JPanel(new GridLayout(0, 1));
@@ -116,10 +93,6 @@ public class Libro {
     	return panel;
     }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(anno, autore, genere, titolo);
-	}
 
 	@Override
 	public boolean equals(Object obj) {
