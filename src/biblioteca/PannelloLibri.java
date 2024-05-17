@@ -23,42 +23,32 @@ public class PannelloLibri extends JPanel {
     }
     
     public void prenota() {
-    	removeAll();
-    	revalidate();
-    	repaint();
+    	
+    	resetPannelli();
     	mode = 'p';
+    	
     	setLayout(new GridLayout(0, 2));
-    	int disp = 0;
     	biblioteca.ricerca(ricerca);
+    	
+    	int nLibri = 0;
     	
         for (Libro libro : biblioteca.getListaLibri().getElenco()) {
         	if (libro.getStato() && libro.isRicercato()) {
-        		disp++;
-        		
+        		nLibri++;
         		JPanel pannelloLibro = libro.toPanel();
         		pannelloLibro.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(pannelloLibro);
-        		
         		JButton prenotaButton = new JButton(Impostazioni.TESTO_PULSANTE_PRENOTA);
         		prenotaButton.setFocusable(false);
         		prenotaButton.addActionListener(e -> {
-        			removeAll();
-        	    	revalidate();
-        	    	repaint();
+        			resetPannelli();
         	    	setLayout(new GridLayout(0, 2));
-        	    	
-        	    	JPanel labelPanel = new JPanel();
         	    	JLabel etichettaUsername = new JLabel(Impostazioni.TESTO_ETICHETTA_USERNAME);
-        	    	etichettaUsername.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
-        	    	labelPanel.add(etichettaUsername);
-        	    	add(labelPanel);
-        	    	
+        	    	pannelloDimensionato(etichettaUsername);
         	    	JComboBox<String> sceltaUtenti = new JComboBox<>();
         	    	sceltaUtenti.addItem(Impostazioni.SEPARATORE);
         	    	for (Utente utente : biblioteca.getListaUtenti()) 
         	    		sceltaUtenti.addItem(utente.getUsername());
-        	 
-        	    	sceltaUtenti.setPreferredSize(new Dimension(Impostazioni.WIDTH_206,Impostazioni.HEIGHT_25));
         	    	sceltaUtenti.addActionListener(new ActionListener() {
         	    		public void actionPerformed(ActionEvent e) {
         	    			String usernameSelezionato = (String) sceltaUtenti.getSelectedItem();
@@ -67,110 +57,84 @@ public class PannelloLibri extends JPanel {
      	                    	utenteSelezionato.prenotaUtente(libro);
         	    		}
         	    	});
-        	    	
-        	    	JPanel pannelloSceltaUtenti = new JPanel();
-        	    	pannelloSceltaUtenti.add(sceltaUtenti);
-        	    	add(pannelloSceltaUtenti);
-        	        
+        	    	pannelloDimensionato(sceltaUtenti);
         	    });
-        		JPanel prenotaButtonPanel = new JPanel();
-        		prenotaButtonPanel.add(prenotaButton);
-            	add(prenotaButtonPanel);
+        		pannello(prenotaButton);
         	}
         }
         
-        if (disp<5)
-        	for (int i=0; i<6-disp; i++) {
-        		JPanel vuoto = new JPanel();
-        		vuoto.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
-        		add(vuoto);
-        		add(vuoto);
-        	}
+        if (nLibri<5)
+        	vuoto(2*(4-nLibri));
     }
     
     public void restituisci() {
-    	removeAll();
-    	revalidate();
-    	repaint();
+    	resetPannelli();
     	mode = 'r';
     	
     	setLayout(new GridLayout(0, 2));
-    	int disp = 0;
     	biblioteca.ricerca(ricerca);
     	
+    	int nLibri = 0;
         for (Utente utente : biblioteca.getListaUtenti()) {
         	for (Prenotazione prenotazione : utente.getPrenotazioni())
 	        	if (prenotazione.getLibroPrenotato().isRicercato()) {
-	        		disp++;
+	        		nLibri++;
 	        		
 	        		JPanel pannelloLibro = prenotazione.getLibroPrenotato().toPanel();
 	        		pannelloLibro.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
 	        		add(pannelloLibro);
 	        		
-	        		JButton restituisciButton = new JButton("Restituisci");
+	        		JButton restituisciButton = new JButton(Impostazioni.TESTO_PULSANTE_RESTITUISCI);
 	        		restituisciButton.setFocusable(false);
-	        		restituisciButton.setToolTipText("In prestito a: " + utente.getUsername());
+	        		restituisciButton.setToolTipText(Impostazioni.TOOLTIP_PRESTITO + utente.getUsername());
 	        		restituisciButton.addActionListener(e -> {
 	        			utente.restituisciUtente(prenotazione.getLibroPrenotato());
 	        	    });
-	        		
-	        		JPanel restituisciButtonPanel = new JPanel();
-	        		restituisciButtonPanel.add(restituisciButton);
-	            	add(restituisciButtonPanel);
+	        		pannello(restituisciButton);
 	        	}
         }
         
-        if (disp<5)
-        	for (int i=0; i<6-disp; i++) {
-        		JPanel vuoto = new JPanel();
-        		vuoto.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
-        		add(vuoto);
-        		add(vuoto);
-        	} 
+        if (nLibri<5)
+        	vuoto(2*(4-nLibri));
     }
     
     public void mostra() {
-    	removeAll();
-    	revalidate();
-    	repaint();
+    	
+    	resetPannelli();
     	mode = 'm';
+    	
     	setLayout(new GridLayout(0, 2));
     	biblioteca.ricerca(ricerca);
-    	
-    	
-    	add(new JLabel("Ordina per:"));
+
+    	add(new JLabel(Impostazioni.ETICHETTA_ORDINA));
     	
     	String[] campiOrdinati = new String[4];
     	for(int i = 0; i<4; i++) {
     		campiOrdinati[i] = Impostazioni.CAMPI_ORDINA[(selettoreOrdine+i)%4];
     	}
     	
-    	
     	JComboBox<String> sceltaOrdine = new JComboBox<>(campiOrdinati);
     	sceltaOrdine.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			switch ((String) sceltaOrdine.getSelectedItem()) {
+    			String scelta = (String) sceltaOrdine.getSelectedItem();
+    			switch (scelta) {
     			case Impostazioni.TITOLO:
     				biblioteca.ordinaPerTitolo();
-    				selettoreOrdine=0;
-    				mostra();
     				break;
     			case Impostazioni.AUTORE:
     				biblioteca.ordinaPerAutore();
-    				selettoreOrdine=1;
-    				mostra();
     				break;
     			case Impostazioni.GENERE:
     				biblioteca.ordinaPerGenere();
-    				selettoreOrdine=2;
-    				mostra();
     				break;
     			case Impostazioni.ANNO:
     				biblioteca.ordinaPerAnno();
-    				selettoreOrdine=3;
-    				mostra();
     				break;
     			}
+    			for (int i = 0; i<4; i++)
+    				if (scelta.equalsIgnoreCase(Impostazioni.CAMPI_ORDINA[i]))
+    					selettoreOrdine = i;
+    			mostra();
     		}
     	});
 
@@ -180,11 +144,11 @@ public class PannelloLibri extends JPanel {
     	sceltaPanel.add(new JLabel());
     	add(sceltaPanel);
     	
-    	int disp = 0;
+    	int nLibri = 0;
         for (Libro libro : biblioteca.getListaLibri().getElenco()) {
         	if(libro.isRicercato()) {
         		add(libro.toPanel());
-        		disp++;
+        		nLibri++;
         		if(libro.getStato()) {
             		JLabel discoverde = new JLabel(new ImageIcon(getClass().getResource("green.png")));
             		discoverde.setToolTipText("Disponibile");
@@ -202,13 +166,8 @@ public class PannelloLibri extends JPanel {
         	}
         }
         
-        if (disp<5)
-        	for (int i=0; i<6-disp; i++) {
-        		JPanel vuoto = new JPanel();
-        		vuoto.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
-        		add(vuoto);
-        		add(vuoto);
-        	}
+        if (nLibri<5)
+        	vuoto(2*(4-nLibri));
     }
     
     public void ricerca(String cerca) {
@@ -232,54 +191,39 @@ public class PannelloLibri extends JPanel {
     }
     
     public void aggiungi() {
-    	removeAll();
-    	revalidate();
-    	repaint();
+    	
+    	resetPannelli();
     	mode = 'a';
     	
-    	String[] anni = Impostazioni.ANNI;
-    	
     	setLayout(new GridLayout(0, 2));
-    	add(new JLabel("Titolo:"));
-    	JTextField titolo = new JTextField();
-    	JPanel tpan = new JPanel();
-    	titolo.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
-    	tpan.add(titolo);
-    	add(tpan);
     	
-    	add(new JLabel("Autore:"));
-    	JTextField autore = new JTextField();
-    	JPanel apan = new JPanel();
-    	autore.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
-    	apan.add(autore);
-    	add(apan);
+    	JTextField sceltaTitolo = new JTextField();
+    	JTextField sceltaAutore = new JTextField();
+    	JTextField sceltaGenere = new JTextField();
+    	JComboBox<String> sceltaAnni = new JComboBox<>(Impostazioni.ANNI);
+    	JComponent scelte[] = {sceltaTitolo, sceltaAutore, sceltaGenere, sceltaAnni};
     	
-    	add(new JLabel("Genere:"));
-    	JTextField genere = new JTextField();
-    	JPanel gpan = new JPanel();
-    	genere.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
-    	gpan.add(genere);
-    	add(gpan);
+    	for (int i = 0; i<4; i++) {
+    		add(new JLabel(Impostazioni.ETICHETTE[i]));
+    		pannelloDimensionato(scelte[i]);
+    	}
+   
+    	vuoto(1);
     	
-    	add(new JLabel("Anno:"));
-    	JComboBox<String> combo = new JComboBox<>(anni);
-    	JPanel cpan = new JPanel();
-    	combo.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
-    	cpan.add(combo);
-    	add(cpan);
+    	JButton aggiungiButton = new JButton(Impostazioni.AGGIUNGI);
+    	pannello(aggiungiButton);
     	
-    	add(new JPanel());
-    	JButton agg = new JButton("Aggiungi");
-    	JPanel aggpan = new JPanel();
-    	aggpan.add(agg);
-    	add(aggpan);
-    	agg.addActionListener(new ActionListener() {
+    	aggiungiButton.addActionListener(new ActionListener() {
+    		
 			public void actionPerformed(ActionEvent e){
-				if (!titolo.getText().isBlank() && !autore.getText().isBlank() && !genere.getText().isBlank() && !((String) combo.getSelectedItem()).equalsIgnoreCase(Impostazioni.SEPARATORE)) {
-					biblioteca.aggiungiTitolo(new Libro(titolo.getText(), autore.getText(), genere.getText(), Integer.parseInt((String) combo.getSelectedItem())));
+				
+				if (!sceltaTitolo.getText().isBlank() && !sceltaAutore.getText().isBlank() && !sceltaGenere.getText().isBlank() && !((String) sceltaAnni.getSelectedItem()).equalsIgnoreCase(Impostazioni.SEPARATORE)) {
+					biblioteca.aggiungiTitolo(new Libro(sceltaTitolo.getText(), sceltaAutore.getText(), sceltaGenere.getText(), Integer.parseInt((String) sceltaAnni.getSelectedItem())));
 					mostra();
-				}else JOptionPane.showMessageDialog(getParent(), "Compilare tutti i campi presenti", "Titolo non valido", JOptionPane.ERROR_MESSAGE);
+				}else JOptionPane.showMessageDialog(getParent(), Impostazioni.MESSAGGIO_ERRORE_COMPILAZIONE, Impostazioni.ERRORE_COMPILAZIONE, JOptionPane.ERROR_MESSAGE);
+			
 			}
+			
 	    });
     	
     	vuoto(5);
@@ -287,39 +231,36 @@ public class PannelloLibri extends JPanel {
     }
     
     public void rimuovi() {
-    	removeAll();
-    	revalidate();
-    	repaint();
+    	
+    	resetPannelli();
     	mode = 'c';
+    	
     	setLayout(new GridLayout(0, 2));
-    	int disp = 0;
     	biblioteca.ricerca(ricerca);
+    	
+    	int nLibri = 0;
         for (Libro libro : biblioteca.getListaLibri().getElenco()) {
+        	
         	if (libro.getStato() && libro.isRicercato()) {
-        		disp++;
-        		JPanel panLib = libro.toPanel();
-        		panLib.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
-        		add(panLib);
-        		JButton rimuovi = new JButton("Rimuovi");
-        		rimuovi.setFocusable(false);
-        		//prenota.setPreferredSize(new Dimension(10,10));
-        		rimuovi.addActionListener(e -> {
+        		nLibri++;
+        		
+        		JPanel pannelloLibri = libro.toPanel();
+        		pannelloLibri.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
+        		add(pannelloLibri);
+        		
+        		JButton rimuoviButton = new JButton("Rimuovi");
+        		rimuoviButton.setFocusable(false);
+        		
+        		rimuoviButton.addActionListener(e -> {
         			biblioteca.rimuoviTitolo(libro);
         	        rimuovi();
         	    });
-        		JPanel pan = new JPanel();
-            	pan.add(rimuovi);
-            	//pan.setPreferredSize(new Dimension(10,10));
-            	add(pan);
+        		pannello(rimuoviButton);
         	}
         }
-        if (disp<5)
-        	for (int i=0; i<6-disp; i++) {
-        		JPanel vuoto = new JPanel();
-        		vuoto.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
-        		add(vuoto);
-        		add(vuoto);
-        	} 
+        
+        if (nLibri<5)
+        	vuoto(2*(4-nLibri));
     }
     
     public void utenti() {
@@ -411,5 +352,24 @@ public class PannelloLibri extends JPanel {
     public void vuoto(int n) {
     	for (int i=0; i<n; i++)
     		add(new JPanel()); 
+    }
+    
+    public void pannello(JComponent oggetto) {
+    	JPanel pannello = new JPanel();
+    	pannello.add(oggetto);
+    	add(pannello);
+    }
+    
+    public void pannelloDimensionato(JComponent oggetto) {
+    	JPanel pannello = new JPanel();
+    	oggetto.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
+    	pannello.add(oggetto);
+    	add(pannello);
+	}
+    
+    public void resetPannelli() {
+    	removeAll();
+    	revalidate();
+    	repaint();
     }
 }

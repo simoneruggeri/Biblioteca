@@ -1,5 +1,7 @@
 package biblioteca;
 
+import javax.swing.Icon;
+
 public class Impostazioni {
 
 	private static final int NUMERO_ANNI = 999;
@@ -20,13 +22,25 @@ public class Impostazioni {
 	public static final int WIDTH_10 = 10;
 	public static final String TESTO_ETICHETTA_USERNAME = "username:";
 	public static final String TESTO_PULSANTE_PRENOTA = "Prenota";
-	public static final String ANNO = "anno";
-	public static final String GENERE = "genere";
-	public static final String AUTORE = "autore";
-	public static final String TITOLO = "titolo";
+	public static final String ANNO = "Anno";
+	public static final String GENERE = "Genere";
+	public static final String AUTORE = "Autore";
+	public static final String TITOLO = "Titolo";
 	public static final String[] CAMPI_ORDINA = {TITOLO,AUTORE,GENERE,ANNO};
 	public static final int DIMENSIONE_ANNI = ANNO_CORRENTE - NUMERO_ANNI + 1;
 	public static final String[] ANNI = anni();
+	public static final String ETICHETTA_ANNO = ANNO + ":";
+	public static final String ETICHETTA_AUTORE = AUTORE + ":";
+	public static final String ETICHETTA_GENERE = GENERE + ":";
+	public static final String ETICHETTA_TITOLO = TITOLO + ":";
+	public static final String[] ETICHETTE = {ETICHETTA_TITOLO, ETICHETTA_AUTORE, ETICHETTA_GENERE, ETICHETTA_ANNO};
+	public static final String AGGIUNGI = "Aggiungi";
+	public static final String MESSAGGIO_ERRORE_COMPILAZIONE = "Compilare tutti i campi presenti";
+	public static final String ERRORE_COMPILAZIONE = "Titolo non valido";
+	public static final String TESTO_PULSANTE_RESTITUISCI = "Restituisci";
+	public static final String TOOLTIP_PRESTITO = "In prestito a: ";
+	public static final String ETICHETTA_ORDINA = "Ordina per:";
+
 	
 	public static String[] anni() {
 		String[] anni = new String[DIMENSIONE_ANNI];
