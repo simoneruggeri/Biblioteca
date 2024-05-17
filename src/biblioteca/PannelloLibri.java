@@ -1,21 +1,17 @@
 package biblioteca;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.time.LocalDate;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
-import java.awt.*;
 
 public class PannelloLibri extends JPanel {
     
 	private Biblioteca biblioteca;
-	private String ricerca;
 	private char mode;
-	int selettoreOrdine=0;
+	private int selettoreOrdine;
+	
 	
     public PannelloLibri(Biblioteca biblioteca) {
     	this.biblioteca = biblioteca;
@@ -28,7 +24,6 @@ public class PannelloLibri extends JPanel {
     	mode = 'p';
     	
     	setLayout(new GridLayout(0, 2));
-    	biblioteca.ricerca(ricerca);
     	
     	int nLibri = 0;
     	
@@ -72,7 +67,6 @@ public class PannelloLibri extends JPanel {
     	mode = 'r';
     	
     	setLayout(new GridLayout(0, 2));
-    	biblioteca.ricerca(ricerca);
     	
     	int nLibri = 0;
         for (Utente utente : biblioteca.getListaUtenti()) {
@@ -104,7 +98,6 @@ public class PannelloLibri extends JPanel {
     	mode = 'm';
     	
     	setLayout(new GridLayout(0, 2));
-    	biblioteca.ricerca(ricerca);
 
     	add(new JLabel(Impostazioni.ETICHETTA_ORDINA));
     	
@@ -171,7 +164,7 @@ public class PannelloLibri extends JPanel {
     }
     
     public void ricerca(String cerca) {
-    	this.ricerca = cerca.toLowerCase();
+    	biblioteca.ricerca(cerca.toLowerCase());
     	switch(mode) {
 	    	case 'm':
 	    		mostra();
@@ -236,7 +229,6 @@ public class PannelloLibri extends JPanel {
     	mode = 'c';
     	
     	setLayout(new GridLayout(0, 2));
-    	biblioteca.ricerca(ricerca);
     	
     	int nLibri = 0;
         for (Libro libro : biblioteca.getListaLibri().getElenco()) {
@@ -248,7 +240,7 @@ public class PannelloLibri extends JPanel {
         		pannelloLibri.setPreferredSize(new Dimension(Impostazioni.WIDTH_10,Impostazioni.HEIGHT_80));
         		add(pannelloLibri);
         		
-        		JButton rimuoviButton = new JButton("Rimuovi");
+        		JButton rimuoviButton = new JButton(Impostazioni.RIMUOVI);
         		rimuoviButton.setFocusable(false);
         		
         		rimuoviButton.addActionListener(e -> {
@@ -264,81 +256,80 @@ public class PannelloLibri extends JPanel {
     }
     
     public void utenti() {
-    	removeAll();
-    	revalidate();
-    	repaint();
+    	
+    	resetPannelli();
     	mode = 'u';
-    	setLayout(new FlowLayout());
-    	int nlibri = 0;
+    	
+    	int nLibri = 0;
     	for (Utente utente : biblioteca.getListaUtenti()) {
-    		nlibri++;
+    		nLibri++;
     		if (utente.getPrenotazioni().size()!=0)
-    			nlibri += utente.getPrenotazioni().size()-1;
+    			nLibri += utente.getPrenotazioni().size() - 1;
     	}
-    	Object dati [][] = new Object[nlibri][2];
+    	
+    	Object dati [][] = new Object[nLibri][2];
     	int i = 0;
     	for (Utente utente : biblioteca.getListaUtenti()) {
     		dati[i][0] = utente.getUsername();
     		if (utente.getPrenotazioni().size()!=0)
 	    		for (Prenotazione prenotazione : utente.getPrenotazioni()) {
-	    			int giorni = prenotazione.getScadenza().differenzaGiorni(new Data(LocalDate.now().getDayOfMonth(),LocalDate.now().getMonthValue(),LocalDate.now().getYear()));
-	    			String scadenza = "";
+	    			int giorni = prenotazione.getScadenza().differenzaGiorni(Data.converti(LocalDate.now()));
+	    			String scadenza;
 	    			if (giorni>0) {
-	    				scadenza = "(" + Integer.toString(giorni) + "giorni)";
-	    			}else scadenza = "scaduto";
-	    			String cella = prenotazione.getLibroPrenotato().getTitolo() + scadenza;
-	    			dati[i][1] = cella;
+	    				scadenza = "(" + Integer.toString(giorni) + Impostazioni.GIORNI;
+	    			}else scadenza = Impostazioni.SCADUTO;
+	    			dati[i][1] = prenotazione.getLibroPrenotato().getTitolo() + scadenza;
 	    			i++;
 	    		}
     		else i++;
     	}
-    	String[] columnNames = {"username", "Libri(scadenza)"};
-    	JTable tab = new JTable(new DefaultTableModel(dati, columnNames));
-    	tab.setPreferredScrollableViewportSize(new Dimension(410,nlibri*16));
-    	JScrollPane sp = new JScrollPane(tab);
+    	
+    	JTable tabellaUtenti = new JTable(new DefaultTableModel(dati, Impostazioni.NOMI_COLONNE));
+    	tabellaUtenti.setPreferredScrollableViewportSize(new Dimension(Impostazioni.LARGHEZZA_TABELLA, nLibri*Impostazioni.ALTEZZA_COLONNE));
+    	JScrollPane pannelloTabella = new JScrollPane(tabellaUtenti);
+    	
     	setLayout(new BorderLayout());
-    	//setLayout(new GridLayout(0,1));
-    	JButton addUser = new JButton("Nuovo Utente");
+    	
+    	JButton addUser = new JButton(Impostazioni.NUOVO_UTENTE);
     	addUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				nuovoUtente();
 			}
 	    });
+    	
     	JPanel addUserPanel = new JPanel();
     	addUserPanel.add(addUser);
     	add(addUserPanel, BorderLayout.NORTH);
-        add(sp,BorderLayout.CENTER);
-    	//add(tab);
+        add(pannelloTabella,BorderLayout.CENTER);
     }
     
     public void nuovoUtente() {
-    	removeAll();
-    	revalidate();
-    	repaint();
+    	resetPannelli();
     	mode = 'n';
+    	
     	setLayout(new GridLayout(0, 2));
-    	add(new JLabel("Username:"));
+    	add(new JLabel(Impostazioni.TESTO_ETICHETTA_USERNAME));
+    	
     	JTextField username = new JTextField();
-    	JPanel upan = new JPanel();
-    	username.setPreferredSize(new Dimension(Impostazioni.WIDTH_206, Impostazioni.HEIGHT_25));
-    	upan.add(username);
-    	add(upan);
-    	add(new JPanel());
-    	JButton agg = new JButton("Aggiungi");
-    	JPanel aggpan = new JPanel();
-    	aggpan.add(agg);
-    	add(aggpan);
-    	agg.addActionListener(new ActionListener() {
+    	pannelloDimensionato(username);
+    	
+    	vuoto(1);
+    	
+    	JButton aggiungiUtenteButton = new JButton(Impostazioni.AGGIUNGI);
+    	pannello(aggiungiUtenteButton);
+    	
+    	aggiungiUtenteButton.addActionListener(new ActionListener() {
+    		
 			public void actionPerformed(ActionEvent e){
 				boolean presente = false;
 				for (Utente utente : biblioteca.getListaUtenti())
 					presente = presente || utente.getUsername().equalsIgnoreCase(username.getText());
 				if (username.getText().isBlank()) {
-					JOptionPane.showMessageDialog(getParent(), "Lo username inserito non è valido", "Username non valido", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getParent(), Impostazioni.MESSAGGIO_ERRORE_USERNAME_NON_VALIDO, Impostazioni.ERRORE_USERNAME_NON_VALIDO, JOptionPane.ERROR_MESSAGE);
 				}else if (!presente) {
 					biblioteca.aggiungiUtente(new Utente(username.getText()));
 					utenti();
-				}else JOptionPane.showMessageDialog(getParent(), "Lo username inserito è già in utilizzo", "Username non disponibile", JOptionPane.ERROR_MESSAGE);
+				}else JOptionPane.showMessageDialog(getParent(), Impostazioni.MESSAGGIO_ERRORE_USERNAME_UTILIZZATO, Impostazioni.ERRORE_USERNAME_NON_VALIDO, JOptionPane.ERROR_MESSAGE);
 			}
 	    });
     	vuoto(9);

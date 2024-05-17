@@ -40,6 +40,22 @@ public class Impostazioni {
 	public static final String TESTO_PULSANTE_RESTITUISCI = "Restituisci";
 	public static final String TOOLTIP_PRESTITO = "In prestito a: ";
 	public static final String ETICHETTA_ORDINA = "Ordina per:";
+	public static final String GIORNI = " giorni)";
+	public static final String SCADUTO = "scaduto";
+	public static final String NOME_COLONNA_USERNAME = "username";
+	public static final String NOME_COLONNA_LIBRI = "Libri (scadenza)";
+	public static final String[] NOMI_COLONNE = {NOME_COLONNA_USERNAME, NOME_COLONNA_LIBRI};
+	public static final int LARGHEZZA_TABELLA = 2*WIDTH_206 - 2;
+	public static final int ALTEZZA_COLONNE = 16;
+	public static final String MESSAGGIO_ERRORE_USERNAME_NON_VALIDO = "Lo username inserito non è valido";
+	public static final String ERRORE_USERNAME_NON_VALIDO = "Username non valido";
+	public static final String MESSAGGIO_ERRORE_USERNAME_UTILIZZATO = "Lo username inserito è già in utilizzo";
+	public static final String NUOVO_UTENTE = "Nuovo Utente";
+	public static final String RIMUOVI = "Rimuovi";
+	public static final String CARICAMENTO_COMPLETATO = "Biblioteca caricata con successo da ";
+	public static final String CARICAMENTO_FALLITO = "Errore durante il caricamento della biblioteca da ";
+	public static final String SALVATAGGIO_COMPLETATO = "Biblioteca salvata con successo in ";
+	public static final String SALVATAGGIO_FALLITO = "Errore durante il salvataggio della biblioteca in ";
 
 	
 	public static String[] anni() {

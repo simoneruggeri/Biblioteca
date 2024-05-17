@@ -1,6 +1,7 @@
 package biblioteca;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import com.google.gson.Gson;
 
@@ -42,7 +43,19 @@ public class Utente {
 		if (pren!=null)
 			prenotazioni.remove(pren);
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Utente other = (Utente) obj;
+		return Objects.equals(username, other.username);
+	}
+
 	public boolean presente(Libro libro) {
 		for (Prenotazione booking : prenotazioni)
 			if (booking.getLibroPrenotato().equals(libro))

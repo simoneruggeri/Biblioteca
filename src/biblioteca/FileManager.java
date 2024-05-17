@@ -15,10 +15,8 @@ import java.nio.file.Paths;
 
 
 public class FileManager {
-    private Gson gson;
     
     public FileManager() {
-        this.gson = new Gson();
     }
     
     public Biblioteca leggiDaFile(String filename) {
@@ -27,10 +25,10 @@ public class FileManager {
             String json = Files.readString(filePath);
             Biblioteca biblioteca = new Biblioteca();
             biblioteca.loadFromJson(json);
-            System.out.println("Biblioteca caricata con successo da " + Impostazioni.NOME_FILE_BIBLIOTECA);
+            System.out.println(Impostazioni.CARICAMENTO_COMPLETATO + Impostazioni.NOME_FILE_BIBLIOTECA);
             return biblioteca;
         } catch (IOException e) {
-            System.err.println("Errore durante il caricamento della biblioteca da " + Impostazioni.NOME_FILE_BIBLIOTECA + ": " + e.getMessage());
+            System.err.println(Impostazioni.CARICAMENTO_FALLITO + Impostazioni.NOME_FILE_BIBLIOTECA + ": " + e.getMessage());
             return null;
         }
     }
@@ -40,9 +38,9 @@ public class FileManager {
         try {
             Path filePath = Paths.get(Impostazioni.NOME_FILE_BIBLIOTECA);
             Files.writeString(filePath, json);
-            System.out.println("Biblioteca salvata con successo in " + Impostazioni.NOME_FILE_BIBLIOTECA);
+            System.out.println(Impostazioni.SALVATAGGIO_COMPLETATO + Impostazioni.NOME_FILE_BIBLIOTECA);
         } catch (IOException e) {
-            System.err.println("Errore durante il salvataggio della biblioteca in " + Impostazioni.NOME_FILE_BIBLIOTECA + ": " + e.getMessage());
+            System.err.println(Impostazioni.SALVATAGGIO_FALLITO + Impostazioni.NOME_FILE_BIBLIOTECA + ": " + e.getMessage());
         }
     }
 }
