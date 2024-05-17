@@ -11,11 +11,9 @@ import javax.swing.JScrollPane;
 
 public class BibliotecaMenu extends JPanel{
 
-	
-	private PannelloLibri pannello;
 	public BibliotecaMenu(PannelloLibri pannello) {
 	
-		this.pannello = pannello;
+		
 		setLayout(new GridLayout(0,1));
 		
 		JButton visualizzaButton = new JButton(Impostazioni.VISUALIZZA_CATALOGO);

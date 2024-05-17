@@ -1,7 +1,5 @@
 package biblioteca;
 
-import javax.swing.Icon;
-
 public class Impostazioni {
 
 	private static final int NUMERO_ANNI = 999;
@@ -56,6 +54,16 @@ public class Impostazioni {
 	public static final String CARICAMENTO_FALLITO = "Errore durante il caricamento della biblioteca da ";
 	public static final String SALVATAGGIO_COMPLETATO = "Biblioteca salvata con successo in ";
 	public static final String SALVATAGGIO_FALLITO = "Errore durante il salvataggio della biblioteca in ";
+	public static final int ALTEZZA_IMMAGINE = 150;
+	public static final int LARGHEZZA_IMMAGINE = 200;
+	public static final String TITOLO_PROGRAMMA = "BIBLIOTECA";
+	public static final String FONT_TITOLO = "Times new roman";
+	public static final int DIMENSIONE_TITOLO = 60;
+	public static final String TESTO_PULSANTE_START = "Start";
+	public static final int LARGHEZZA_PULSANTE_START = 80;
+	public static final int ALTEZZA_PULSANTE_START = 40;
+	public static final int START_DISTANZA_X = 100;
+	public static final int START_DISTANZA_Y = 10;
 
 	
 	public static String[] anni() {

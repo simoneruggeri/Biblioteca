@@ -1,15 +1,8 @@
 package biblioteca;
 
-import java.awt.event.*;
-
 import javax.swing.JFrame;
 
-
-
 public class BibliotecaTest {
-
-	
-	
 
 	public static void main(String[] a){
 		FileManager filemanager = new FileManager();
