@@ -56,6 +56,7 @@ public class BibliotecaFrame extends JFrame{
 		
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
+				remove(startPanel);
 				menu();
 			}
 	    });
@@ -68,7 +69,7 @@ public class BibliotecaFrame extends JFrame{
 	}
 	
 	public void menu() {
-		removeAll();
+		
 		
 		JTextField casella = new JTextField();
 		JPanel pannelloCentrale = new JPanel(new BorderLayout());

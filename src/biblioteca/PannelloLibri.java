@@ -48,8 +48,10 @@ public class PannelloLibri extends JPanel {
         	    		public void actionPerformed(ActionEvent e) {
         	    			String usernameSelezionato = (String) sceltaUtenti.getSelectedItem();
         	    			Utente utenteSelezionato = biblioteca.utentePresente(usernameSelezionato);
-        	    			if (utenteSelezionato != null) 
+        	    			if (utenteSelezionato != null) {
      	                    	utenteSelezionato.prenotaUtente(libro);
+     	                    	prenota();
+        	    			}
         	    		}
         	    	});
         	    	pannelloDimensionato(sceltaUtenti);
@@ -63,6 +65,7 @@ public class PannelloLibri extends JPanel {
     }
     
     public void restituisci() {
+    	
     	resetPannelli();
     	mode = 'r';
     	
@@ -83,6 +86,7 @@ public class PannelloLibri extends JPanel {
 	        		restituisciButton.setToolTipText(Impostazioni.TOOLTIP_PRESTITO + utente.getUsername());
 	        		restituisciButton.addActionListener(e -> {
 	        			utente.restituisciUtente(prenotazione.getLibroPrenotato());
+	        			restituisci();
 	        	    });
 	        		pannello(restituisciButton);
 	        	}
