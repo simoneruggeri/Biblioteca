@@ -39,7 +39,7 @@ public class BibliotecaFrame extends JFrame{
 		JPanel startPanel = new JPanel();
 		startPanel.setLayout(new FlowLayout(FlowLayout.CENTER, Impostazioni.START_DISTANZA_X, Impostazioni.START_DISTANZA_Y));
 		
-		URL imageURL = getClass().getResource("png.png");
+		URL imageURL = getClass().getResource("/images/png.png");
 		ImageIcon icon = new ImageIcon(imageURL);
 		Image image = icon.getImage().getScaledInstance(Impostazioni.LARGHEZZA_IMMAGINE, Impostazioni.ALTEZZA_IMMAGINE, Image.SCALE_DEFAULT);
 		ImageIcon scaledIcon = new ImageIcon(image);

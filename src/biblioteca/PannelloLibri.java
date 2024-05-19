@@ -147,12 +147,12 @@ public class PannelloLibri extends JPanel {
         		add(libro.toPanel());
         		nLibri++;
         		if(libro.getStato()) {
-            		JLabel discoverde = new JLabel(new ImageIcon(getClass().getResource("green.png")));
+            		JLabel discoverde = new JLabel(new ImageIcon(getClass().getResource("/images/green.png")));
             		discoverde.setToolTipText("Disponibile");
             		add(discoverde);
             	} 
             	else {
-            		JLabel discorosso = new JLabel(new ImageIcon(getClass().getResource("red.png")));
+            		JLabel discorosso = new JLabel(new ImageIcon(getClass().getResource("/images/red.png")));
             		String usernamePrestito = "";
             		for (Utente utente : biblioteca.getListaUtenti())
             			if (utente.presente(libro))
