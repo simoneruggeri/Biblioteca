@@ -253,10 +253,8 @@ public class PannelloLibri extends JPanel {
         		JButton rimuoviButton = new JButton(Impostazioni.RIMUOVI);
         		rimuoviButton.setFocusable(false);
         		
-        		rimuoviButton.addActionListener(e -> {
-        			biblioteca.rimuoviTitolo(libro);
-        	        rimuovi();
-        	    });
+        		RimuoviAction azioneRimuovi = new RimuoviAction(libro);
+        		rimuoviButton.addActionListener(azioneRimuovi);
         		pannello(rimuoviButton);
         	}
         }
@@ -301,10 +299,8 @@ public class PannelloLibri extends JPanel {
     	setLayout(new BorderLayout());
     	
     	JButton addUser = new JButton(Impostazioni.NUOVO_UTENTE);
-    	addUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				nuovoUtente();
-			}
+    	addUser.addActionListener(e -> {
+    		nuovoUtente();
 	    });
     	
     	JPanel addUserPanel = new JPanel();
@@ -373,4 +369,18 @@ public class PannelloLibri extends JPanel {
     	revalidate();
     	repaint();
     }
+    
+    private class RimuoviAction implements ActionListener {
+    	private Libro libro;
+    	RimuoviAction(Libro libro){
+    		this.libro=libro;
+    		}
+		public void actionPerformed(ActionEvent e) {
+			biblioteca.rimuoviTitolo(libro);
+	        rimuovi();
+		}
+    }
+    
+   
+   
 }
