@@ -17,7 +17,7 @@ public class Impostazioni {
 	public static final int HEIGHT_25 = 25;
 	public static final int WIDTH_206 = 206;
 	public static final int HEIGHT_80 = 80;
-	public static final int WIDTH_10 = 10;
+	public static final int WIDTH_10 = 1;
 	public static final String TESTO_ETICHETTA_USERNAME = "username:";
 	public static final String TESTO_PULSANTE_PRENOTA = "Prenota";
 	public static final String ANNO = "Anno";
