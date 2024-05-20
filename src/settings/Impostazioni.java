@@ -4,7 +4,7 @@ public class Impostazioni {
 
 	private static final int NUMERO_ANNI = 999;
 	private static final int ANNO_CORRENTE = 2024;
-	public static final String NOME_FILE_BIBLIOTECA = "biblioteca.json";
+	public static final String NOME_FILE_BIBLIOTECA = "savings/biblioteca.json";
 	public static final String SEPARATORE = "------------------------------------------";
 	public static final String ESCI = "Esci";
 	public static final String RESTITUISCI_LIBRO = "Restituisci Libro";
