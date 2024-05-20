@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import com.google.gson.Gson;
 
+import settings.Impostazioni;
+
 public class Libro {
 
 	private String titolo;

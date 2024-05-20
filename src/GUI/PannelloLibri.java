@@ -1,11 +1,16 @@
-package biblioteca;
+package GUI;
 
 import java.awt.*;
+import biblioteca.*;
 import java.awt.event.*;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import application.FileManager;
+import biblioteca.Biblioteca;
+import settings.Impostazioni;
 
 public class PannelloLibri extends JPanel {
     

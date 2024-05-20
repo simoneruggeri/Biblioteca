@@ -1,4 +1,4 @@
-package biblioteca;
+package settings;
 
 public class Impostazioni {
 

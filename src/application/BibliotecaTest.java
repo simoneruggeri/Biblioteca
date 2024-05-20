@@ -1,6 +1,10 @@
-package biblioteca;
+package application;
 
 import javax.swing.JFrame;
+
+import GUI.BibliotecaFrame;
+import biblioteca.Biblioteca;
+import settings.Impostazioni;
 
 public class BibliotecaTest {
 

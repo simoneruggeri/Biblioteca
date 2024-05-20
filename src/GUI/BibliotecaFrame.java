@@ -1,4 +1,4 @@
-package biblioteca;
+package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,11 +12,15 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import application.FileManager;
+import biblioteca.*;
+import settings.Impostazioni;
+
 
 public class BibliotecaFrame extends JFrame{
 	
-	Biblioteca biblioteca; 
-	FileManager filemanager;
+	private Biblioteca biblioteca; 
+	private FileManager filemanager;
 	
 	public BibliotecaFrame(String s, Biblioteca biblioteca) {
 		super(s);

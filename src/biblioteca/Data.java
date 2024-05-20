@@ -6,9 +6,9 @@ import com.google.gson.Gson;
 
 public class Data {
 
-	int giorno;
-	int mese;
-	int anno;
+	private int giorno;
+	private int mese;
+	private int anno;
 	
 	public Data(int giorno, int mese, int anno) {
 		this.giorno = giorno;

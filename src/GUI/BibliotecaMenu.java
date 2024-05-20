@@ -1,6 +1,9 @@
-package biblioteca;
+package GUI;
 
 import java.awt.*;
+import biblioteca.*;
+import settings.Impostazioni;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
