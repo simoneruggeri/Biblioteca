@@ -64,27 +64,23 @@ public class Libro {
 	public String toStringGenere() {
         return "Genere: " + genere;
     }
-
-    // Metodo toString() per il titolo
+    
     public String toStringTitolo() {
         return "Titolo: " + titolo;
     }
 
-    // Metodo toString() per l'autore
     public String toStringAutore() {
         return "Autore: " + autore;
     }
 
-    // Metodo toString() per l'anno
     public String toStringAnno() {
         return "Anno: " + anno;
     }
-    
-    
+
     public JPanel toPanel() {
     	JPanel panel = new JPanel(new GridLayout(0, 1));
     	JLabel etichettaTitolo = new JLabel(toStringTitolo());
-    	panel.add(new JLabel("--------------------------"));
+    	panel.add(new JLabel(Impostazioni.SEPARATORE));
     	etichettaTitolo.setToolTipText(titolo);
     	panel.add(etichettaTitolo);
     	panel.add(new JLabel(toStringAutore()));

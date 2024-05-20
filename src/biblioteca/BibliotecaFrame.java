@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URL;
+import java.nio.file.Path;
 import java.awt.*;
 
 import javax.swing.*;
@@ -39,8 +40,8 @@ public class BibliotecaFrame extends JFrame{
 		JPanel startPanel = new JPanel();
 		startPanel.setLayout(new FlowLayout(FlowLayout.CENTER, Impostazioni.START_DISTANZA_X, Impostazioni.START_DISTANZA_Y));
 		
-		URL imageURL = getClass().getResource("/images/png.png");
-		ImageIcon icon = new ImageIcon(imageURL);
+
+		ImageIcon icon = new ImageIcon(Path.of(Impostazioni.CARTELLA_IMMAGINI,Impostazioni.NOME_IMMAGINE_LIBRO).toString());
 		Image image = icon.getImage().getScaledInstance(Impostazioni.LARGHEZZA_IMMAGINE, Impostazioni.ALTEZZA_IMMAGINE, Image.SCALE_DEFAULT);
 		ImageIcon scaledIcon = new ImageIcon(image);
 		startPanel.add(new JLabel(scaledIcon));

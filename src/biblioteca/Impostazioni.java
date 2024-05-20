@@ -64,6 +64,11 @@ public class Impostazioni {
 	public static final int ALTEZZA_PULSANTE_START = 40;
 	public static final int START_DISTANZA_X = 100;
 	public static final int START_DISTANZA_Y = 10;
+	public static final String CARTELLA_IMMAGINI = "images";
+	public static final String NOME_IMMAGINE_VERDE = "green.png";
+	public static final String NOME_IMMAGINE_ROSSO = "red.png";
+	public static final String DISPONIBILE = "Disponibile";
+	public static final String NOME_IMMAGINE_LIBRO = "iconalibro.png";
 
 	
 	public static String[] anni() {

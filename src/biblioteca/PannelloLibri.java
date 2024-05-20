@@ -2,6 +2,7 @@ package biblioteca;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -147,17 +148,17 @@ public class PannelloLibri extends JPanel {
         		add(libro.toPanel());
         		nLibri++;
         		if(libro.getStato()) {
-            		JLabel discoverde = new JLabel(new ImageIcon(getClass().getResource("/images/green.png")));
-            		discoverde.setToolTipText("Disponibile");
+            		JLabel discoverde = new JLabel(new ImageIcon(Path.of(Impostazioni.CARTELLA_IMMAGINI,Impostazioni.NOME_IMMAGINE_VERDE).toString()));
+            		discoverde.setToolTipText(Impostazioni.DISPONIBILE);
             		add(discoverde);
             	} 
             	else {
-            		JLabel discorosso = new JLabel(new ImageIcon(getClass().getResource("/images/red.png")));
+            		JLabel discorosso = new JLabel(new ImageIcon(Path.of(Impostazioni.CARTELLA_IMMAGINI,Impostazioni.NOME_IMMAGINE_ROSSO).toString()));
             		String usernamePrestito = "";
             		for (Utente utente : biblioteca.getListaUtenti())
             			if (utente.presente(libro))
             				usernamePrestito = utente.getUsername();
-            		discorosso.setToolTipText("In prestito a: " + usernamePrestito);
+            		discorosso.setToolTipText(Impostazioni.TOOLTIP_PRESTITO + usernamePrestito);
             		add(discorosso);
             	}
         	}
